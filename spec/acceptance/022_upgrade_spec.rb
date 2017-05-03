@@ -10,7 +10,7 @@ describe "elasticsearch 2x:" do
     describe 'Setup 2.0.0' do
       it 'should run successful' do
         pp = "class { 'elasticsearch': config => { 'node.name' => 'elasticsearch001', 'cluster.name' => '#{test_settings['cluster_name']}' }, manage_repo => true, repo_version => '#{test_settings['repo_version2x']}', java_install => true, version => '2.0.0' }
-              elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+              elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
         "
 
         # Run it twice and test for idempotency
@@ -29,7 +29,7 @@ describe "elasticsearch 2x:" do
     describe "Upgrade to 2.0.1" do
       it 'Should run succesful' do
         pp = "class { 'elasticsearch': config => { 'node.name' => 'elasticsearch001', 'cluster.name' => '#{test_settings['cluster_name']}' }, manage_repo => true, repo_version => '#{test_settings['repo_version2x']}', java_install => true, version => '2.0.1' }
-              elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+              elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
         "
 
         # Run it twice and test for idempotency

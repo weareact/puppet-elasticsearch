@@ -10,8 +10,8 @@ describe "elasticsearch template define:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': config => { 'node.name' => 'elasticsearch001', 'cluster.name' => '#{test_settings['cluster_name']}' }, manage_repo => true, repo_version => '#{test_settings['repo_version']}', java_install => true }
-          elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-          elasticsearch::template { 'foo': ensure => 'present', file => 'puppet:///modules/another/good.json' }"
+          elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+          elasticsearch_old::template { 'foo': ensure => 'present', file => 'puppet:///modules/another/good.json' }"
 
       # Run it twice and test for idempotency
       apply_manifest(pp, :catch_failures => true)
@@ -28,8 +28,8 @@ describe "elasticsearch template define:" do
 
       it 'run should fail' do
         pp = "class { 'elasticsearch': config => { 'node.name' => 'elasticsearch001', 'cluster.name' => '#{test_settings['cluster_name']}' }, manage_repo => true, repo_version => '#{test_settings['repo_version']}', java_install => true }
-             elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-             elasticsearch::template { 'foo': ensure => 'present', file => 'puppet:///modules/another/bad.json' }"
+             elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+             elasticsearch_old::template { 'foo': ensure => 'present', file => 'puppet:///modules/another/bad.json' }"
 
         apply_manifest(pp, :expect_failures => true)
       end
@@ -45,7 +45,7 @@ describe "elasticsearch template define:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)

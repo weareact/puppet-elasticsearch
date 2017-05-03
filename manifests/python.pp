@@ -1,4 +1,4 @@
-# == Define: elasticsearch::python
+# == Define: elasticsearch_old::python
 #
 # there are many python bindings for elasticsearch. This provides all
 # the ones we know about http://www.elasticsearch.org/guide/clients/
@@ -21,13 +21,13 @@
 #
 # === Examples
 #
-# elasticsearch::python { 'pyes':; }
+# elasticsearch_old::python { 'pyes':; }
 #
 # === Authors
 #
 # * Richard Pijnenburg <mailto:richard.pijnenburg@elasticsearch.com>
 #
-define elasticsearch::python (
+define elasticsearch_old::python (
   $ensure = 'present'
 ) {
 

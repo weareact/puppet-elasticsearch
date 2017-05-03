@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'elasticsearch::shield::role' do
+describe 'elasticsearch_old::shield::role' do
 
   let(:title) { 'elastic_role' }
 

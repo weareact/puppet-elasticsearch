@@ -9,8 +9,8 @@ describe "elasticsearch 2x:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': config => { 'node.name' => 'elasticsearch001', 'cluster.name' => '#{test_settings['cluster_name']}' }, manage_repo => true, repo_version => '#{test_settings['repo_version2x']}', java_install => true, version => '2.0.0' }
-            elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-            elasticsearch::plugin{'lmenezes/elasticsearch-kopf': instances => 'es-01' }
+            elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+            elasticsearch_old::plugin{'lmenezes/elasticsearch-kopf': instances => 'es-01' }
            "
 
       # Run it twice and test for idempotency
@@ -59,8 +59,8 @@ describe "elasticsearch 2x:" do
 
       it 'should run successfully' do
         pp = "class { 'elasticsearch': config => { 'node.name' => 'elasticearch001', 'cluster.name' => '#{test_settings['cluster_name']}' }, manage_repo => true, repo_version => '#{test_settings['repo_version2x']}', java_install => true, version => '2.0.0' }
-              elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-              elasticsearch::plugin{'elasticsearch/non-existing': module_dir => 'non-existing', instances => 'es-01' }
+              elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+              elasticsearch_old::plugin{'elasticsearch/non-existing': module_dir => 'non-existing', instances => 'es-01' }
         "
         #  Run it twice and test for idempotency
         apply_manifest(pp, :expect_failures => true)
@@ -77,7 +77,7 @@ describe "elasticsearch 2x:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)
@@ -103,8 +103,8 @@ describe "elasticsearch 2x:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': config => { 'node.name' => 'elasticsearch001', 'cluster.name' => '#{test_settings['cluster_name']}' }, manage_repo => true, repo_version => '#{test_settings['repo_version2x']}', java_install => true, elasticsearch_user => 'elasticsearch', elasticsearch_group => 'elasticsearch', version => '2.0.0' }
-            elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-            elasticsearch::plugin{'lmenezes/elasticsearch-kopf': module_dir => 'kopf', instances => 'es-01' }
+            elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+            elasticsearch_old::plugin{'lmenezes/elasticsearch-kopf': module_dir => 'kopf', instances => 'es-01' }
       "
 
       # Run it twice and test for idempotency
@@ -141,7 +141,7 @@ describe "elasticsearch 2x:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)
@@ -167,10 +167,10 @@ describe "elasticsearch 2x:" do
     describe 'Setup 2.0.0' do
       it 'should run successful' do
         pp = "class { 'elasticsearch': config => { 'node.name' => 'elasticsearch001', 'cluster.name' => '#{test_settings['cluster_name']}' }, manage_repo => true, repo_version => '#{test_settings['repo_version2x']}', java_install => true, version => '2.0.0' }
-              elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-              elasticsearch::plugin{'cloud-aws': instances => 'es-01' }
-              elasticsearch::plugin{'marvel-agent': instances => 'es-01' }
-              elasticsearch::plugin{'license': instances => 'es-01' }
+              elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+              elasticsearch_old::plugin{'cloud-aws': instances => 'es-01' }
+              elasticsearch_old::plugin{'marvel-agent': instances => 'es-01' }
+              elasticsearch_old::plugin{'license': instances => 'es-01' }
         "
 
         # Run it twice and test for idempotency
@@ -192,10 +192,10 @@ describe "elasticsearch 2x:" do
     describe "Upgrade to 2.0.1" do
       it 'Should run succesful' do
         pp = "class { 'elasticsearch': config => { 'node.name' => 'elasticsearch001', 'cluster.name' => '#{test_settings['cluster_name']}' }, manage_repo => true, repo_version => '#{test_settings['repo_version2x']}', java_install => true, version => '2.0.1' }
-              elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-              elasticsearch::plugin{'cloud-aws': instances => 'es-01' }
-              elasticsearch::plugin{'marvel-agent': instances => 'es-01' }
-              elasticsearch::plugin{'license': instances => 'es-01' }
+              elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+              elasticsearch_old::plugin{'cloud-aws': instances => 'es-01' }
+              elasticsearch_old::plugin{'marvel-agent': instances => 'es-01' }
+              elasticsearch_old::plugin{'license': instances => 'es-01' }
         "
 
         # Run it twice and test for idempotency
@@ -218,8 +218,8 @@ describe "elasticsearch 2x:" do
   describe "offline install via puppet resource" do
       it 'Should run succesful' do
         pp = "class { 'elasticsearch': config => { 'node.name' => 'elasticsearch001', 'cluster.name' => '#{test_settings['cluster_name']}' }, manage_repo => true, repo_version => '#{test_settings['repo_version2x']}', java_install => true }
-              elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-              elasticsearch::plugin{'kopf': source => 'puppet:///modules/another/elasticsearch-kopf.zip', instances => 'es-01' }
+              elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+              elasticsearch_old::plugin{'kopf': source => 'puppet:///modules/another/elasticsearch-kopf.zip', instances => 'es-01' }
         "
 
         # Run it twice and test for idempotency
@@ -238,7 +238,7 @@ describe "elasticsearch 2x:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
             file { '/usr/share/elasticsearch/plugin':
               ensure => 'absent',
               force => true,
@@ -267,8 +267,8 @@ describe "elasticsearch 2x:" do
   describe "offline install via file url" do
       it 'Should run succesful' do
         pp = "class { 'elasticsearch': config => { 'node.name' => 'elasticsearch001', 'cluster.name' => '#{test_settings['cluster_name']}' }, manage_repo => true, repo_version => '#{test_settings['repo_version2x']}', java_install => true }
-              elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-              elasticsearch::plugin{'kopf': url => 'file:///tmp/elasticsearch-kopf.zip', instances => 'es-01' }
+              elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+              elasticsearch_old::plugin{'kopf': url => 'file:///tmp/elasticsearch-kopf.zip', instances => 'es-01' }
         "
 
         # Run it twice and test for idempotency
@@ -287,7 +287,7 @@ describe "elasticsearch 2x:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)
@@ -311,8 +311,8 @@ describe "elasticsearch 2x:" do
   describe "install via url" do
       it 'Should run succesful' do
         pp = "class { 'elasticsearch': config => { 'node.name' => 'elasticsearch001', 'cluster.name' => '#{test_settings['cluster_name']}' }, manage_repo => true, repo_version => '#{test_settings['repo_version2x']}', java_install => true }
-              elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-              elasticsearch::plugin{'HQ': url => 'https://github.com/royrusso/elasticsearch-HQ/archive/v2.0.3.zip', instances => 'es-01' }
+              elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+              elasticsearch_old::plugin{'HQ': url => 'https://github.com/royrusso/elasticsearch-HQ/archive/v2.0.3.zip', instances => 'es-01' }
         "
 
         # Run it twice and test for idempotency
@@ -331,7 +331,7 @@ describe "elasticsearch 2x:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)
