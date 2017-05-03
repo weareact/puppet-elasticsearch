@@ -1,4 +1,4 @@
-# == Define: elasticsearch_old::shield::user
+# == Define: elasticsearch::shield::user
 #
 # Manages shield users.
 #
@@ -28,7 +28,7 @@
 #
 # # Creates and manages a user with membership in the 'logstash'
 # # and 'kibana4' roles.
-# elasticsearch_old::shield::user { 'bob':
+# elasticsearch::shield::user { 'bob':
 #   password => 'foobar',
 #   roles    => ['logstash', 'kibana4'],
 # }
@@ -37,7 +37,7 @@
 #
 # * Tyler Langlois <mailto:tyler@elastic.co>
 #
-define elasticsearch_old::shield::user (
+define elasticsearch::shield::user (
   $password,
   $ensure   = 'present',
   $roles    = [],

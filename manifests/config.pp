@@ -1,4 +1,4 @@
-# == Class: elasticsearch_old::config
+# == Class: elasticsearch::config
 #
 # This class exists to coordinate all configuration related actions,
 # functionality and logical units in a central place.
@@ -12,7 +12,7 @@
 # === Examples
 #
 # This class may be imported by other classes to use its functionality:
-#   class { 'elasticsearch_old::config': }
+#   class { 'elasticsearch::config': }
 #
 # It is not intended to be used directly by external resources like node
 # definitions or other modules.
@@ -22,13 +22,13 @@
 #
 # * Richard Pijnenburg <mailto:richard.pijnenburg@elasticsearch.com>
 #
-class elasticsearch_old::config {
+class elasticsearch::config {
 
   #### Configuration
 
   File {
-    owner => $elasticsearch_old::elasticsearch_user,
-    group => $elasticsearch_old::elasticsearch_group,
+    owner => $elasticsearch::elasticsearch_user,
+    group => $elasticsearch::elasticsearch_group,
   }
 
   Exec {
@@ -36,49 +36,49 @@ class elasticsearch_old::config {
     cwd  => '/',
   }
 
-  if ( $elasticsearch_old::ensure == 'present' ) {
+  if ( $elasticsearch::ensure == 'present' ) {
 
-    $notify_service = $elasticsearch_old::restart_on_change ? {
-      true  => Class['elasticsearch_old::service'],
+    $notify_service = $elasticsearch::restart_on_change ? {
+      true  => Class['elasticsearch::service'],
       false => undef,
     }
 
-    file { $elasticsearch_old::configdir:
+    file { $elasticsearch::configdir:
       ensure => directory,
       mode   => '0644',
     }
 
-    file { $elasticsearch_old::logdir:
+    file { $elasticsearch::logdir:
       ensure  => 'directory',
       group   => undef,
       mode    => '0644',
       recurse => true,
     }
 
-    file { $elasticsearch_old::params::homedir:
+    file { $elasticsearch::params::homedir:
       ensure  => 'directory',
     }
 
-    file { $elasticsearch_old::datadir:
+    file { $elasticsearch::datadir:
       ensure  => 'directory',
     }
 
-    file { "${elasticsearch_old::homedir}/lib":
+    file { "${elasticsearch::homedir}/lib":
       ensure  => 'directory',
       recurse => true,
     }
 
-    if $elasticsearch_old::params::pid_dir {
-      file { $elasticsearch_old::params::pid_dir:
+    if $elasticsearch::params::pid_dir {
+      file { $elasticsearch::params::pid_dir:
         ensure  => 'directory',
         group   => undef,
         recurse => true,
       }
 
-      if ($elasticsearch_old::service_providers == 'systemd') {
-        $user = $elasticsearch_old::elasticsearch_user
-        $group = $elasticsearch_old::elasticsearch_group
-        $pid_dir = $elasticsearch_old::params::pid_dir
+      if ($elasticsearch::service_providers == 'systemd') {
+        $user = $elasticsearch::elasticsearch_user
+        $group = $elasticsearch::elasticsearch_group
+        $pid_dir = $elasticsearch::params::pid_dir
 
         file { '/usr/lib/tmpfiles.d/elasticsearch.conf':
           ensure  => 'file',
@@ -90,18 +90,18 @@ class elasticsearch_old::config {
     }
 
 
-    file { "${elasticsearch_old::params::homedir}/templates_import":
+    file { "${elasticsearch::params::homedir}/templates_import":
       ensure => 'directory',
       mode   => '0644',
     }
 
-    file { "${elasticsearch_old::params::homedir}/scripts":
+    file { "${elasticsearch::params::homedir}/scripts":
       ensure => 'directory',
       mode   => '0644',
     }
 
     # Resources for shield management
-    file { "${elasticsearch_old::params::homedir}/shield":
+    file { "${elasticsearch::params::homedir}/shield":
       ensure => 'directory',
       mode   => '0644',
       owner  => 'root',
@@ -112,16 +112,16 @@ class elasticsearch_old::config {
     file { '/etc/init.d/elasticsearch':
       ensure => 'absent',
     }
-    if $elasticsearch_old::params::systemd_service_path {
-      file { "${elasticsearch_old::params::systemd_service_path}/elasticsearch.service":
+    if $elasticsearch::params::systemd_service_path {
+      file { "${elasticsearch::params::systemd_service_path}/elasticsearch.service":
         ensure => 'absent',
       }
     }
 
-    $new_init_defaults = { 'CONF_DIR' => $elasticsearch_old::configdir }
-    if $elasticsearch_old::params::defaults_location {
-      augeas { "${elasticsearch_old::params::defaults_location}/elasticsearch":
-        incl    => "${elasticsearch_old::params::defaults_location}/elasticsearch",
+    $new_init_defaults = { 'CONF_DIR' => $elasticsearch::configdir }
+    if $elasticsearch::params::defaults_location {
+      augeas { "${elasticsearch::params::defaults_location}/elasticsearch":
+        incl    => "${elasticsearch::params::defaults_location}/elasticsearch",
         lens    => 'Shellvars.lns',
         changes => template("${module_name}/etc/sysconfig/defaults.erb"),
       }
@@ -134,9 +134,9 @@ class elasticsearch_old::config {
       ensure => 'absent',
     }
 
-  } elsif ( $elasticsearch_old::ensure == 'absent' ) {
+  } elsif ( $elasticsearch::ensure == 'absent' ) {
 
-    file { $elasticsearch_old::plugindir:
+    file { $elasticsearch::plugindir:
       ensure => 'absent',
       force  => true,
       backup => false,

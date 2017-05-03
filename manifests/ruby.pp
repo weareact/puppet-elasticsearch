@@ -1,4 +1,4 @@
-# == Define: elasticsearch_old::ruby
+# == Define: elasticsearch::ruby
 #
 # there are many ruby bindings for elasticsearch. This provides all
 # the ones we know about http://www.elasticsearch.org/guide/clients/
@@ -21,13 +21,13 @@
 #
 # === Examples
 #
-# elasticsearch_old::ruby { 'elasticsearch':; }
+# elasticsearch::ruby { 'elasticsearch':; }
 #
 # === Authors
 #
 # * Richard Pijnenburg <mailto:richard@ispavailability.com>
 #
-define elasticsearch_old::ruby (
+define elasticsearch::ruby (
   $ensure = 'present'
 ) {
 

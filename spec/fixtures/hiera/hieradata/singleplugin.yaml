@@ -1,9 +1,9 @@
 ---
-elasticsearch_old::instances:
+elasticsearch::instances:
   es-01:
     config:
       node.name: 'es-01'
-elasticsearch_old::plugins:
+elasticsearch::plugins:
   'mobz/elasticsearch-head/1.0.0':
     ensure: 'present'
     module_dir: 'head'

@@ -6,8 +6,8 @@ describe "elasticsearch class:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, manage_repo => true, repo_version => '#{test_settings['repo_version']}', java_install => true, restart_on_change => false }
-            elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-            elasticsearch_old::plugin{'lmenezes/elasticsearch-kopf': instances => 'es-01' }
+            elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+            elasticsearch::plugin{'lmenezes/elasticsearch-kopf': instances => 'es-01' }
            "
 
       # Run it twice and test for idempotency
@@ -58,8 +58,8 @@ describe "elasticsearch class:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, manage_repo => true, repo_version => '#{test_settings['repo_version']}', java_install => true, restart_on_change => false }
-            elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch002', 'http.port' => '#{test_settings['port_a']}' } }
-            elasticsearch_old::plugin{'lmenezes/elasticsearch-kopf': instances => 'es-01' }
+            elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch002', 'http.port' => '#{test_settings['port_a']}' } }
+            elasticsearch::plugin{'lmenezes/elasticsearch-kopf': instances => 'es-01' }
            "
 
       # Run it twice and test for idempotency
@@ -111,7 +111,7 @@ describe "elasticsearch class:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch::instance{ 'es-01': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)

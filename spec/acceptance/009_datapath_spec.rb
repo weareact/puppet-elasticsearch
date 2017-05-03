@@ -6,7 +6,7 @@ describe "Data dir settings" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, manage_repo => true, repo_version => '#{test_settings['repo_version']}', java_install => true }
-            elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+            elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
            "
 
       # Run it twice and test for idempotency
@@ -58,7 +58,7 @@ describe "Data dir settings" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, manage_repo => true, repo_version => '#{test_settings['repo_version']}', java_install => true, datadir => '/var/lib/elasticsearch-data' }
-            elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+            elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
            "
 
       # Run it twice and test for idempotency
@@ -109,7 +109,7 @@ describe "Data dir settings" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch::instance{ 'es-01': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)
@@ -130,7 +130,7 @@ describe "Data dir settings" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, manage_repo => true, repo_version => '#{test_settings['repo_version']}', java_install => true }
-            elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}'}, datadir => '#{test_settings['datadir_1']}' }
+            elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}'}, datadir => '#{test_settings['datadir_1']}' }
            "
 
       # Run it twice and test for idempotency
@@ -180,7 +180,7 @@ describe "Data dir settings" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch::instance{ 'es-01': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)
@@ -201,7 +201,7 @@ describe "Data dir settings" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, manage_repo => true, repo_version => '#{test_settings['repo_version']}', java_install => true, datadir => [ '/var/lib/elasticsearch/01', '/var/lib/elasticsearch/02'] }
-            elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+            elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
            "
 
       # Run it twice and test for idempotency
@@ -260,7 +260,7 @@ describe "Data dir settings" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch::instance{ 'es-01': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)
@@ -282,7 +282,7 @@ describe "Data dir settings" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, manage_repo => true, repo_version => '#{test_settings['repo_version']}', java_install => true }
-            elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' }, datadir => [ '#{test_settings['datadir_1']}', '#{test_settings['datadir_2']}'] }
+            elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' }, datadir => [ '#{test_settings['datadir_1']}', '#{test_settings['datadir_2']}'] }
            "
 
       # Run it twice and test for idempotency
@@ -341,7 +341,7 @@ describe "Data dir settings" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch::instance{ 'es-01': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)

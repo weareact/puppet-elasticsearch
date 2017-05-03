@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'elasticsearch_old::service::systemd', :type => 'define' do
+describe 'elasticsearch::service::systemd', :type => 'define' do
 
   on_supported_os({
     :hardwaremodels => ['x86_64'],
@@ -145,4 +145,4 @@ describe 'elasticsearch_old::service::systemd', :type => 'define' do
       end
     end # of context on os
   end # of on_supported_os
-end # of describe elasticsearch_old::service::systemd
+end # of describe elasticsearch::service::systemd

@@ -1,4 +1,4 @@
-# == Define: elasticsearch_old::service::openbsd
+# == Define: elasticsearch::service::openbsd
 #
 # This class exists to coordinate all service management related actions,
 # functionality and logical units in a central place.
@@ -54,11 +54,11 @@
 #
 # * Richard Pijnenburg <mailto:richard.pijnenburg@elasticsearch.com>
 #
-define elasticsearch_old::service::openbsd(
-  $ensure             = $elasticsearch_old::ensure,
-  $status             = $elasticsearch_old::status,
-  $pid_dir            = $elasticsearch_old::pid_dir,
-  $init_template      = $elasticsearch_old::init_template,
+define elasticsearch::service::openbsd(
+  $ensure             = $elasticsearch::ensure,
+  $status             = $elasticsearch::status,
+  $pid_dir            = $elasticsearch::pid_dir,
+  $init_template      = $elasticsearch::init_template,
   $service_flags      = undef,
 ) {
 
@@ -107,7 +107,7 @@ define elasticsearch_old::service::openbsd(
 
   }
 
-  $notify_service = $elasticsearch_old::restart_on_change ? {
+  $notify_service = $elasticsearch::restart_on_change ? {
     true  => Service["elasticsearch-instance-${name}"],
     false => undef,
   }
@@ -146,9 +146,9 @@ define elasticsearch_old::service::openbsd(
       enable     => $service_enable,
       name       => "elasticsearch_${name}",
       flags      => $service_flags,
-      hasstatus  => $elasticsearch_old::params::service_hasstatus,
-      hasrestart => $elasticsearch_old::params::service_hasrestart,
-      pattern    => $elasticsearch_old::params::service_pattern,
+      hasstatus  => $elasticsearch::params::service_hasstatus,
+      hasrestart => $elasticsearch::params::service_hasrestart,
+      pattern    => $elasticsearch::params::service_pattern,
     }
 
   }

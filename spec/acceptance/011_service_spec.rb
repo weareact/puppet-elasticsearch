@@ -7,7 +7,7 @@ describe "Service tests:" do
     context "Change the defaults file" do
       it 'should run successfully' do
         pp = "class { 'elasticsearch': manage_repo => true, repo_version => '#{test_settings['repo_version']}', java_install => true, config => { 'cluster.name' => '#{test_settings['cluster_name']}' }, init_defaults => { 'ES_JAVA_OPTS' => '\"-server -XX:+UseTLAB -XX:+CMSClassUnloadingEnabled\"' } }
-              elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001' } }
+              elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001' } }
              "
 
         # Run it twice and test for idempotency
@@ -56,7 +56,7 @@ describe "Service tests:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch::instance{ 'es-01': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)

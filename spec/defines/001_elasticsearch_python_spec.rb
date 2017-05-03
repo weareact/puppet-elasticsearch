@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'elasticsearch_old::python', :type => 'define' do
+describe 'elasticsearch::python', :type => 'define' do
 
   let :facts do {
     :operatingsystem => 'CentOS',

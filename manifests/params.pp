@@ -1,4 +1,4 @@
-# == Class: elasticsearch_old::params
+# == Class: elasticsearch::params
 #
 # This class exists to
 # 1. Declutter the default value assignment for class parameters.
@@ -27,7 +27,7 @@
 #
 # * Richard Pijnenburg <mailto:richard@ispavailability.com>
 #
-class elasticsearch_old::params {
+class elasticsearch::params {
 
   #### Default values for the parameters of the main module class, init.pp
 

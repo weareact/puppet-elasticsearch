@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'elasticsearch_old::plugin', :type => 'define' do
+describe 'elasticsearch::plugin', :type => 'define' do
 
   let(:title) { 'mobz/elasticsearch-head/1.0.0' }
   let :facts do {

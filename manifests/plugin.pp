@@ -1,9 +1,9 @@
-# == Define: elasticsearch_old::plugin
+# == Define: elasticsearch::plugin
 #
 # This define allows you to install arbitrary Elasticsearch plugins
 # either by using the default repositories or by specifying an URL
 #
-# All default values are defined in the elasticsearch_old::params class.
+# All default values are defined in the elasticsearch::params class.
 #
 #
 # === Parameters
@@ -56,10 +56,10 @@
 # === Examples
 #
 # # From official repository
-# elasticsearch_old::plugin{'mobz/elasticsearch-head': module_dir => 'head'}
+# elasticsearch::plugin{'mobz/elasticsearch-head': module_dir => 'head'}
 #
 # # From custom url
-# elasticsearch_old::plugin{ 'elasticsearch-jetty':
+# elasticsearch::plugin{ 'elasticsearch-jetty':
 #  module_dir => 'elasticsearch-jetty',
 #  url        => 'https://oss-es-plugins.s3.amazonaws.com/elasticsearch-jetty/elasticsearch-jetty-0.90.0.zip',
 # }
@@ -70,7 +70,7 @@
 # * Dennis Konert <mailto:dkonert@gmail.com>
 # * Richard Pijnenburg <mailto:richard.pijnenburg@elasticsearch.com>
 #
-define elasticsearch_old::plugin(
+define elasticsearch::plugin(
   $instances,
   $module_dir      = undef,
   $ensure          = 'present',
@@ -83,9 +83,9 @@ define elasticsearch_old::plugin(
 
   include elasticsearch
 
-  $notify_service = $elasticsearch_old::restart_on_change ? {
+  $notify_service = $elasticsearch::restart_on_change ? {
     false   => undef,
-    default => elasticsearch_old::Service[$instances],
+    default => Elasticsearch::Service[$instances],
   }
 
   if ($module_dir != undef) {
@@ -93,14 +93,14 @@ define elasticsearch_old::plugin(
   }
 
   # set proxy by override or parse and use proxy_url from
-  # elasticsearch_old::proxy_url or use no proxy at all
+  # elasticsearch::proxy_url or use no proxy at all
   
   if ($proxy_host != undef and $proxy_port != undef) {
     $proxy = "-DproxyPort=${proxy_port} -DproxyHost=${proxy_host}"
   }
-  elsif ($elasticsearch_old::proxy_url != undef) {
-    $proxy_host_from_url = regsubst($elasticsearch_old::proxy_url, '(http|https)://([^:]+)(|:\d+).+', '\2')
-    $proxy_port_from_url = regsubst($elasticsearch_old::proxy_url, '(?:http|https)://[^:/]+(?::([0-9]+))?(?:/.*)?', '\1')
+  elsif ($elasticsearch::proxy_url != undef) {
+    $proxy_host_from_url = regsubst($elasticsearch::proxy_url, '(http|https)://([^:]+)(|:\d+).+', '\2')
+    $proxy_port_from_url = regsubst($elasticsearch::proxy_url, '(?:http|https)://[^:/]+(?::([0-9]+))?(?:/.*)?', '\1')
     
     # validate parsed values before using them
     if (is_string($proxy_host_from_url) and is_integer($proxy_port_from_url)) {
@@ -116,7 +116,7 @@ define elasticsearch_old::plugin(
     $filenameArray = split($source, '/')
     $basefilename = $filenameArray[-1]
 
-    $file_source = "${elasticsearch_old::package_dir}/${basefilename}"
+    $file_source = "${elasticsearch::package_dir}/${basefilename}"
 
     file { $file_source:
       ensure => 'file',
@@ -140,7 +140,7 @@ define elasticsearch_old::plugin(
         source          => $file_source,
         url             => $url,
         proxy_args      => $proxy,
-        plugin_dir      => $::elasticsearch_old::plugindir,
+        plugin_dir      => $::elasticsearch::plugindir,
         install_options => $install_options,
         notify          => $notify_service,
       }

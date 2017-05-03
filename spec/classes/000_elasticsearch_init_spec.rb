@@ -61,10 +61,10 @@ describe 'elasticsearch', :type => 'class' do
         # init.pp
         it { should compile.with_all_deps }
         it { should contain_class('elasticsearch') }
-        it { should contain_anchor('elasticsearch_old::begin') }
-        it { should contain_class('elasticsearch_old::params') }
-        it { should contain_class('elasticsearch_old::package').that_requires('Anchor[elasticsearch_old::begin]') }
-        it { should contain_class('elasticsearch_old::config').that_requires('Class[elasticsearch_old::package]') }
+        it { should contain_anchor('elasticsearch::begin') }
+        it { should contain_class('elasticsearch::params') }
+        it { should contain_class('elasticsearch::package').that_requires('Anchor[elasticsearch::begin]') }
+        it { should contain_class('elasticsearch::config').that_requires('Class[elasticsearch::package]') }
 
         # Base directories
         it { should contain_file('/etc/elasticsearch') }
@@ -275,14 +275,14 @@ describe 'elasticsearch', :type => 'class' do
         }
         case facts[:osfamily]
         when 'Debian'
-          it { should contain_class('elasticsearch_old::repo').that_requires('Anchor[elasticsearch_old::begin]') }
+          it { should contain_class('elasticsearch::repo').that_requires('Anchor[elasticsearch::begin]') }
           it { should contain_class('apt') }
           it { should contain_apt__source('elasticsearch').with(:release => 'stable', :repos => 'main', :location => 'http://packages.elastic.co/elasticsearch/1.0/debian') }
         when 'RedHat'
-          it { should contain_class('elasticsearch_old::repo').that_requires('Anchor[elasticsearch_old::begin]') }
+          it { should contain_class('elasticsearch::repo').that_requires('Anchor[elasticsearch::begin]') }
           it { should contain_yumrepo('elasticsearch').with(:baseurl => 'http://packages.elastic.co/elasticsearch/1.0/centos', :gpgkey => 'http://packages.elastic.co/GPG-KEY-elasticsearch', :enabled => 1) }
         when 'SuSE'
-          it { should contain_class('elasticsearch_old::repo').that_requires('Anchor[elasticsearch_old::begin]') }
+          it { should contain_class('elasticsearch::repo').that_requires('Anchor[elasticsearch::begin]') }
           it { should contain_exec('elasticsearch_suse_import_gpg') }
           it { should contain_zypprepo('elasticsearch').with(:baseurl => 'http://packages.elastic.co/elasticsearch/1.0/centos') }
           it { should contain_exec('elasticsearch_zypper_refresh_elasticsearch') }

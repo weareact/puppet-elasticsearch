@@ -1,4 +1,4 @@
-# == Define: elasticsearch_old::template
+# == Define: elasticsearch::template
 #
 #  This define allows you to insert, update or delete templates that are used within Elasticsearch for the indexes
 #
@@ -54,14 +54,14 @@
 #
 # * Richard Pijnenburg <mailto:richard.pijnenburg@elasticsearch.com>
 #
-define elasticsearch_old::template(
+define elasticsearch::template(
   $ensure   = 'present',
   $file     = undef,
   $content  = undef,
   $host     = 'localhost',
   $port     = 9200,
-  $protocol = $::elasticsearch_old::protocol,
-  $ssl_args = $::elasticsearch_old::ssl_args
+  $protocol = $::elasticsearch::protocol,
+  $ssl_args = $::elasticsearch::ssl_args
 ) {
 
   require elasticsearch
@@ -116,10 +116,10 @@ define elasticsearch_old::template(
   if ($ensure == 'absent') {
 
     # delete the template file on disk and then on the server
-    file { "${elasticsearch_old::params::homedir}/templates_import/elasticsearch-template-${name}.json":
+    file { "${elasticsearch::params::homedir}/templates_import/elasticsearch-template-${name}.json":
       ensure  => 'absent',
       notify  => Exec[ "delete_template_${name}" ],
-      require => File[ "${elasticsearch_old::params::homedir}/templates_import" ],
+      require => File[ "${elasticsearch::params::homedir}/templates_import" ],
     }
   }
 
@@ -127,24 +127,24 @@ define elasticsearch_old::template(
 
     if $content == undef {
       # place the template file using the file source
-      file { "${elasticsearch_old::params::homedir}/templates_import/elasticsearch-template-${name}.json":
+      file { "${elasticsearch::params::homedir}/templates_import/elasticsearch-template-${name}.json":
         ensure  => file,
         source  => $file,
         notify  => Exec[ "delete_template_${name}" ],
-        require => File[ "${elasticsearch_old::params::homedir}/templates_import" ],
+        require => File[ "${elasticsearch::params::homedir}/templates_import" ],
       }
     } else {
       # place the template file using content
-      file { "${elasticsearch_old::params::homedir}/templates_import/elasticsearch-template-${name}.json":
+      file { "${elasticsearch::params::homedir}/templates_import/elasticsearch-template-${name}.json":
         ensure  => file,
         content => $content,
         notify  => Exec[ "delete_template_${name}" ],
-        require => File[ "${elasticsearch_old::params::homedir}/templates_import" ],
+        require => File[ "${elasticsearch::params::homedir}/templates_import" ],
       }
     }
 
     exec { "insert_template_${name}":
-      command     => "curl ${ssl_args} -sL -w \"%{http_code}\\n\" -XPUT ${es_url} -d @${elasticsearch_old::params::homedir}/templates_import/elasticsearch-template-${name}.json -o /dev/null | egrep \"(200|201)\" > /dev/null",
+      command     => "curl ${ssl_args} -sL -w \"%{http_code}\\n\" -XPUT ${es_url} -d @${elasticsearch::params::homedir}/templates_import/elasticsearch-template-${name}.json -o /dev/null | egrep \"(200|201)\" > /dev/null",
       unless      => "test $(curl ${ssl_args} -s '${es_url}?pretty=true' | wc -l) -gt 1",
       refreshonly => true,
       loglevel    => 'debug',

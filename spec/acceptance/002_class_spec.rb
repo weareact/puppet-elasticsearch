@@ -6,7 +6,7 @@ describe "elasticsearch class:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, manage_repo => true, repo_version => '#{test_settings['repo_version']}', java_install => true }
-            elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+            elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
            "
 
       # Run it twice and test for idempotency
@@ -52,8 +52,8 @@ describe "elasticsearch class:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, manage_repo => true, repo_version => '#{test_settings['repo_version']}', java_install => true }
-            elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-            elasticsearch_old::instance { 'es-02': config => { 'node.name' => 'elasticsearch002', 'http.port' => '#{test_settings['port_b']}' } }
+            elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+            elasticsearch::instance { 'es-02': config => { 'node.name' => 'elasticsearch002', 'http.port' => '#{test_settings['port_b']}' } }
            "
 
       # Run it twice and test for idempotency
@@ -115,8 +115,8 @@ describe "elasticsearch class:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
-            elasticsearch_old::instance{ 'es-02': ensure => 'absent' }
+            elasticsearch::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch::instance{ 'es-02': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)

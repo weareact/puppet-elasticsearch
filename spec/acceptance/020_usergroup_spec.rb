@@ -12,7 +12,7 @@ describe "elasticsearch class:" do
             group { 'esuser': ensure => 'present' }
             group { 'esgroup': ensure => 'present' }
             class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, manage_repo => true, repo_version => '#{test_settings['repo_version']}', java_install => true, elasticsearch_user => 'esuser', elasticsearch_group => 'esgroup' }
-            elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+            elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
            "
 
       # Run it twice and test for idempotency
@@ -71,7 +71,7 @@ describe "elasticsearch class:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch_old::instance{ 'es-01': ensure => 'absent' } ->
+            elasticsearch::instance{ 'es-01': ensure => 'absent' } ->
             file { '/usr/share/elasticsearch': ensure => 'absent', force => true }
            "
 

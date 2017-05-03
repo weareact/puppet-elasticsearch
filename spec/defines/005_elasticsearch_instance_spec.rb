@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'elasticsearch_old::instance', :type => 'define' do
+describe 'elasticsearch::instance', :type => 'define' do
 
   default_params = { }
 
@@ -111,7 +111,7 @@ describe 'elasticsearch_old::instance', :type => 'define' do
       let(:pre_condition) { 'class {"elasticsearch": config => { }}'  }
 
       it { should contain_datacat_fragment('main_config_es-01') }
-      it { should contain_datacat('/etc/elasticsearch/es-01/elasticsearch.yml').with(:notify => "elasticsearch_old::Service[es-01]") }
+      it { should contain_datacat('/etc/elasticsearch/es-01/elasticsearch.yml').with(:notify => "Elasticsearch::Service[es-01]") }
 
     end
 

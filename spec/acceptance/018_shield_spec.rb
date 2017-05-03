@@ -12,8 +12,8 @@ describe "elasticsearch shield" do
       repo_version => '#{test_settings['repo_version']}',
     }
 
-    elasticsearch_old::plugin { 'elasticsearch/license/latest' :  }
-    elasticsearch_old::plugin { 'elasticsearch/shield/latest' : }
+    elasticsearch::plugin { 'elasticsearch/license/latest' :  }
+    elasticsearch::plugin { 'elasticsearch/shield/latest' : }
     EOF
   end
 
@@ -23,15 +23,15 @@ describe "elasticsearch shield" do
 
       let :single_manifest do
         base_manifest + <<-EOF
-          elasticsearch_old::instance { ['es-01'] :  }
+          elasticsearch::instance { ['es-01'] :  }
 
-          elasticsearch_old::Plugin { instances => ['es-01'],  }
+          Elasticsearch::Plugin { instances => ['es-01'],  }
 
-          elasticsearch_old::shield::user { '#{test_settings['shield_user']}':
+          elasticsearch::shield::user { '#{test_settings['shield_user']}':
             password => '#{test_settings['shield_password']}',
             roles    => ['admin'],
           }
-          elasticsearch_old::shield::user { '#{test_settings['shield_user']}pwchange':
+          elasticsearch::shield::user { '#{test_settings['shield_user']}pwchange':
             password => '#{test_settings['shield_hashed_password']}',
             roles    => ['admin'],
           }
@@ -102,12 +102,12 @@ describe "elasticsearch shield" do
 
       let :passwd_manifest do
         base_manifest + <<-EOF
-          elasticsearch_old::instance { ['es-01'] :  }
+          elasticsearch::instance { ['es-01'] :  }
 
-          elasticsearch_old::Plugin { instances => ['es-01'],  }
+          Elasticsearch::Plugin { instances => ['es-01'],  }
 
           notify { 'change password' : } ~>
-          elasticsearch_old::shield::user { '#{test_settings['shield_user']}pwchange':
+          elasticsearch::shield::user { '#{test_settings['shield_user']}pwchange':
             password => '#{test_settings['shield_password'][0..5]}',
             roles    => ['admin'],
           }
@@ -147,12 +147,12 @@ describe "elasticsearch shield" do
 
       let :single_manifest do
         base_manifest + <<-EOF
-          elasticsearch_old::instance { ['es-01'] :  }
+          elasticsearch::instance { ['es-01'] :  }
 
-          elasticsearch_old::Plugin { instances => ['es-01'],  }
+          Elasticsearch::Plugin { instances => ['es-01'],  }
 
 
-          elasticsearch_old::shield::role { '#{@role}':
+          elasticsearch::shield::role { '#{@role}':
             privileges => {
               'cluster' => [
                 'cluster:monitor/health',
@@ -160,7 +160,7 @@ describe "elasticsearch shield" do
             }
           }
 
-          elasticsearch_old::shield::user { '#{test_settings['shield_user']}':
+          elasticsearch::shield::user { '#{test_settings['shield_user']}':
             password => '#{test_settings['shield_password']}',
             roles    => ['#{@role}'],
           }
@@ -224,7 +224,7 @@ describe "elasticsearch shield" do
 
         let :single_manifest do
           base_manifest + <<-EOF
-            elasticsearch_old::instance { 'es-01':
+            elasticsearch::instance { 'es-01':
               ssl                  => true,
               ca_certificate       => '#{@tls[:ca][:cert][:path]}',
               certificate          => '#{@tls[:clients].first[:cert][:path]}',
@@ -232,9 +232,9 @@ describe "elasticsearch shield" do
               keystore_password    => '#{@keystore_password}',
             }
 
-            elasticsearch_old::Plugin { instances => ['es-01'],  }
+            Elasticsearch::Plugin { instances => ['es-01'],  }
 
-            elasticsearch_old::shield::user { '#{test_settings['shield_user']}':
+            elasticsearch::shield::user { '#{test_settings['shield_user']}':
               password => '#{test_settings['shield_password']}',
               roles => ['admin'],
             }
@@ -282,13 +282,13 @@ describe "elasticsearch shield" do
 
         let :multi_manifest do
           base_manifest + %Q{
-            elasticsearch_old::shield::user { '#{test_settings['shield_user']}':
+            elasticsearch::shield::user { '#{test_settings['shield_user']}':
               password => '#{test_settings['shield_password']}',
               roles => ['admin'],
             }
           } + @tls[:clients].each_with_index.map do |cert, i|
             %Q{
-              elasticsearch_old::instance { 'es-%02d':
+              elasticsearch::instance { 'es-%02d':
                 ssl                  => true,
                 ca_certificate       => '#{@tls[:ca][:cert][:path]}',
                 certificate          => '#{cert[:cert][:path]}',
@@ -301,7 +301,7 @@ describe "elasticsearch shield" do
               }
             } % [i+1, i+1, @tls[:clients].length]
           end.join("\n") + %Q{
-            elasticsearch_old::Plugin { instances => %s, }
+            Elasticsearch::Plugin { instances => %s, }
           } % @tls[:clients].each_with_index.map { |_, i| "es-%02d" % (i+1)}.to_s
         end
 
@@ -351,8 +351,8 @@ describe "elasticsearch shield" do
         %Q{
           class { 'elasticsearch' : ensure => absent, }
 
-          elasticsearch_old::Instance { ensure => absent, }
-          elasticsearch_old::instance { %s : }
+          Elasticsearch::Instance { ensure => absent, }
+          elasticsearch::instance { %s : }
         } % @tls[:clients].each_with_index.map do |_, i|
           "es-%02d" % (i+1)
         end.to_s
