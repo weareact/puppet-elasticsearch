@@ -33,7 +33,7 @@ define elasticsearch_old::script(
   $ensure  = 'present',
 ) {
 
-  require elasticsearch
+  require elasticsearch_old
 
   # ensure
   if ! ($ensure in [ 'present', 'absent' ]) {

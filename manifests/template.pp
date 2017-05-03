@@ -64,7 +64,7 @@ define elasticsearch_old::template(
   $ssl_args = $::elasticsearch_old::ssl_args
 ) {
 
-  require elasticsearch
+  require elasticsearch_old
 
   # ensure
   if ! ($ensure in [ 'present', 'absent' ]) {
