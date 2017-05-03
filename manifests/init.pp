@@ -229,7 +229,7 @@
 #
 # * Richard Pijnenburg <mailto:richard.pijnenburg@elasticsearch.com>
 #
-class elasticsearch(
+class elasticsearch_old(
   $ensure                = $elasticsearch_old::params::ensure,
   $status                = $elasticsearch_old::params::status,
   $restart_on_change     = $elasticsearch_old::params::restart_on_change,
