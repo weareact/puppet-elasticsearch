@@ -249,7 +249,7 @@ Bugfix release 0.9.4
 * Add the ability to create and populate scripts
 
 ####Bugfixes
-* add support for init_defaults_file to elasticsearch::instance
+* add support for init_defaults_file to elasticsearch_old::instance
 * Update apt key to full 40characters
 
 ####Changes

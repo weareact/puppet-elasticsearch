@@ -6,7 +6,7 @@ describe "Integration testing" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, java_install => true, package_url => '#{test_settings['snapshot_package']}' }
-            elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+            elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
            "
 
       # Run it twice and test for idempotency
@@ -52,9 +52,9 @@ describe "Integration testing" do
 
       it 'should run successfully' do
         pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, java_install => true, package_url => '#{test_settings['snapshot_package']}' }
-              elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-              elasticsearch::plugin{'#{ENV['LICENSE_PLUGIN_NAME']}': instances => 'es-01', url => '#{ENV['LICENSE_PLUGIN_URL']}' }
-              elasticsearch::plugin{'#{ENV['PLUGIN_NAME']}': instances => 'es-01', url => '#{ENV['PLUGIN_URL']}' }
+              elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+              elasticsearch_old::plugin{'#{ENV['LICENSE_PLUGIN_NAME']}': instances => 'es-01', url => '#{ENV['LICENSE_PLUGIN_URL']}' }
+              elasticsearch_old::plugin{'#{ENV['PLUGIN_NAME']}': instances => 'es-01', url => '#{ENV['PLUGIN_URL']}' }
              "
 
         # Run it twice and test for idempotency

@@ -11,7 +11,7 @@ describe "Integration testing" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, java_install => true, package_url => '#{test_settings['snapshot_package']}' }
-            elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+            elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
            "
 
       # Run it twice and test for idempotency
@@ -57,8 +57,8 @@ describe "Integration testing" do
 
       it 'should run successfully' do
         pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, java_install => true, package_url => '#{test_settings['snapshot_package']}' }
-              elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-              elasticsearch::template { 'foo': ensure => 'present', file => 'puppet:///modules/another/good.json' }"
+              elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+              elasticsearch_old::template { 'foo': ensure => 'present', file => 'puppet:///modules/another/good.json' }"
 
         # Run it twice and test for idempotency
         apply_manifest(pp, :catch_failures => true)
@@ -75,8 +75,8 @@ describe "Integration testing" do
 
         it 'run should fail' do
           pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, java_install => true, package_url => '#{test_settings['snapshot_package']}' }
-                elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-                elasticsearch::template { 'foo': ensure => 'present', file => 'puppet:///modules/another/bad.json' }"
+                elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+                elasticsearch_old::template { 'foo': ensure => 'present', file => 'puppet:///modules/another/bad.json' }"
 
           apply_manifest(pp, :expect_failures => true)
         end
@@ -96,8 +96,8 @@ describe "Integration testing" do
 
       it 'should run successfully' do
         pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, java_install => true, package_url => '#{test_settings['snapshot_package']}' }
-              elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-              elasticsearch::plugin { 'lmenezes/elasticsearch-kopf': instances => 'es-01' }
+              elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+              elasticsearch_old::plugin { 'lmenezes/elasticsearch-kopf': instances => 'es-01' }
              "
 
         # Run it twice and test for idempotency
@@ -135,8 +135,8 @@ describe "Integration testing" do
 
         it 'should run successfully' do
           pp = "class { 'elasticsearch': config => { 'cluster.name' => '#{test_settings['cluster_name']}'}, java_install => true, package_url => '#{test_settings['snapshot_package']}' }
-                elasticsearch::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
-                elasticsearch::plugin{'elasticsearch/non-existing': module_dir => 'non-existing', instances => 'es-01' }
+                elasticsearch_old::instance { 'es-01': config => { 'node.name' => 'elasticsearch001', 'http.port' => '#{test_settings['port_a']}' } }
+                elasticsearch_old::plugin{'elasticsearch/non-existing': module_dir => 'non-existing', instances => 'es-01' }
                "
           apply_manifest(pp, :expect_failures => true)
         end

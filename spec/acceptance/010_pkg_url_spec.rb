@@ -9,7 +9,7 @@ describe "Elasticsearch class:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': package_url => '#{test_settings['url']}', java_install => true, config => { 'node.name' => 'elasticsearch001', 'cluster.name' => '#{test_settings['cluster_name']}' } }
-            elasticsearch::instance{ 'es-01': }
+            elasticsearch_old::instance{ 'es-01': }
            "
 
       # Run it twice and test for idempotency
@@ -41,7 +41,7 @@ describe "Elasticsearch class:" do
   context "Clean" do
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)
@@ -62,7 +62,7 @@ describe "Elasticsearch class:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': package_url => 'file:#{test_settings['local']}', java_install => true, config => { 'node.name' => 'elasticsearch001', 'cluster.name' => '#{test_settings['cluster_name']}' } }
-            elasticsearch::instance{ 'es-01': }
+            elasticsearch_old::instance{ 'es-01': }
            "
 
       # Run it twice and test for idempotency
@@ -94,7 +94,7 @@ describe "Elasticsearch class:" do
   context "Clean" do
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)
@@ -115,7 +115,7 @@ describe "Elasticsearch class:" do
 
     it 'should run successfully' do
       pp = "class { 'elasticsearch': package_url => 'puppet:///modules/another/#{test_settings['puppet']}', java_install => true, config => { 'node.name' => 'elasticsearch001', 'cluster.name' => '#{test_settings['cluster_name']}' } }
-            elasticsearch::instance { 'es-01': }
+            elasticsearch_old::instance { 'es-01': }
            "
 
       # Run it twice and test for idempotency
@@ -147,7 +147,7 @@ describe "Elasticsearch class:" do
   context "Clean" do
     it 'should run successfully' do
       pp = "class { 'elasticsearch': ensure => 'absent' }
-            elasticsearch::instance{ 'es-01': ensure => 'absent' }
+            elasticsearch_old::instance{ 'es-01': ensure => 'absent' }
            "
 
       apply_manifest(pp, :catch_failures => true)

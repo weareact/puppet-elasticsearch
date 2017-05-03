@@ -28,7 +28,7 @@ describe 'elasticsearch', :type => 'class' do
           default_params
         end
 
-        it { should contain_class('elasticsearch::repo').that_requires('Anchor[elasticsearch::begin]') }
+        it { should contain_class('elasticsearch_old::repo').that_requires('Anchor[elasticsearch_old::begin]') }
       end
 
 
@@ -41,7 +41,7 @@ describe 'elasticsearch', :type => 'class' do
         end
 
         it { should contain_stage('setup') }
-        it { should contain_class('elasticsearch::repo').with(:stage => 'setup') }
+        it { should contain_class('elasticsearch_old::repo').with(:stage => 'setup') }
 
       end
 

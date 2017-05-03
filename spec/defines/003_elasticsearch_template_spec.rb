@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'elasticsearch::template', :type => 'define' do
+describe 'elasticsearch_old::template', :type => 'define' do
 
   let :facts do {
     :operatingsystem => 'CentOS',
