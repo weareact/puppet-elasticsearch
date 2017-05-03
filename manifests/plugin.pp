@@ -135,7 +135,7 @@ define elasticsearch_old::plugin(
   case $ensure {
     'installed', 'present': {
 
-      elasticsearch_plugin { $name:
+      elasticsearch_old_plugin { $name:
         ensure          => 'present',
         source          => $file_source,
         url             => $url,
@@ -147,7 +147,7 @@ define elasticsearch_old::plugin(
 
     }
     'absent': {
-      elasticsearch_plugin { $name:
+      elasticsearch_old_plugin { $name:
         ensure => absent,
       }
     }

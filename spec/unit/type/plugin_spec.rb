@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Puppet::Type.type(:elasticsearch_plugin).provider(:plugin) do
+describe Puppet::Type.type(:elasticsearch_old_plugin).provider(:plugin) do
 
   let(:resource_name) { "lmenezes/elasticsearch-kopf" }
 
   describe "input validation" do
 
-    let(:type) { Puppet::Type.type(:elasticsearch_plugin) }
+    let(:type) { Puppet::Type.type(:elasticsearch_old_plugin) }
 
     before do
       Process.stubs(:euid).returns 0
@@ -14,7 +14,7 @@ describe Puppet::Type.type(:elasticsearch_plugin).provider(:plugin) do
     end
 
     it "should default to being installed" do
-      plugin = Puppet::Type.type(:elasticsearch_plugin).new(:name => resource_name )
+      plugin = Puppet::Type.type(:elasticsearch_old_plugin).new(:name => resource_name )
       expect(plugin.should(:ensure)).to eq(:present)
     end
 
@@ -36,12 +36,12 @@ end
 
 describe 'other tests' do
 
-  prov_c = Puppet::Type.type(:elasticsearch_plugin).provider(:plugin)
+  prov_c = Puppet::Type.type(:elasticsearch_old_plugin).provider(:plugin)
 
   describe prov_c do
 
     it 'should install a plugin' do
-      resource = Puppet::Type.type(:elasticsearch_plugin).new(
+      resource = Puppet::Type.type(:elasticsearch_old_plugin).new(
         :name => "lmenezes/elasticsearch-kopf",
         :ensure => :present
       )

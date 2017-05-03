@@ -1,7 +1,7 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__),"..","..",".."))
 
-Puppet::Type.type(:elasticsearch_plugin).provide(:plugin) do
-  desc "A provider for the resource type `elasticsearch_plugin`,
+Puppet::Type.type(:elasticsearch_old_plugin).provide(:plugin) do
+  desc "A provider for the resource type `elasticsearch_old_plugin`,
         which handles plugin installation"
 
   os = Facter.value('osfamily')

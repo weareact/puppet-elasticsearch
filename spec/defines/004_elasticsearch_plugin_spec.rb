@@ -24,7 +24,7 @@ describe 'elasticsearch_old::plugin', :type => 'define' do
       } end
 
       it { should contain_elasticsearch__plugin('mobz/elasticsearch-head/1.0.0') }
-      it { should contain_elasticsearch_plugin('mobz/elasticsearch-head/1.0.0') }
+      it { should contain_elasticsearch_old_plugin('mobz/elasticsearch-head/1.0.0') }
     end
 
     context "Remove a plugin" do
@@ -36,7 +36,7 @@ describe 'elasticsearch_old::plugin', :type => 'define' do
       } end
 
       it { should contain_elasticsearch__plugin('mobz/elasticsearch-head/1.0.0') }
-      it { should contain_elasticsearch_plugin('mobz/elasticsearch-head/1.0.0').with(:ensure => 'absent') }
+      it { should contain_elasticsearch_old_plugin('mobz/elasticsearch-head/1.0.0').with(:ensure => 'absent') }
     end
 
   end
@@ -52,7 +52,7 @@ describe 'elasticsearch_old::plugin', :type => 'define' do
       } end
 
       it { should contain_elasticsearch__plugin('mobz/elasticsearch-head/1.0.0') }
-      it { should contain_elasticsearch_plugin('mobz/elasticsearch-head/1.0.0').with(:ensure => 'present', :url => 'https://github.com/mobz/elasticsearch-head/archive/master.zip') }
+      it { should contain_elasticsearch_old_plugin('mobz/elasticsearch-head/1.0.0').with(:ensure => 'present', :url => 'https://github.com/mobz/elasticsearch-head/archive/master.zip') }
     end
 
   end
@@ -68,7 +68,7 @@ describe 'elasticsearch_old::plugin', :type => 'define' do
 
       it { should contain_elasticsearch__plugin('head') }
       it { should contain_file('/opt/elasticsearch/swdl/plugin.zip').with(:source => 'puppet:///path/to/my/plugin.zip', :before => 'Elasticsearch_plugin[head]') }
-      it { should contain_elasticsearch_plugin('head').with(:ensure => 'present', :source => '/opt/elasticsearch/swdl/plugin.zip') }
+      it { should contain_elasticsearch_old_plugin('head').with(:ensure => 'present', :source => '/opt/elasticsearch/swdl/plugin.zip') }
 
   end
   

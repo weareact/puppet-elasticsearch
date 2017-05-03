@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-provider_class = Puppet::Type.type(:elasticsearch_plugin).provider(:plugin)
+provider_class = Puppet::Type.type(:elasticsearch_old_plugin).provider(:plugin)
 
 describe provider_class do
 
   let(:resource_name) { 'lmenezes/elasticsearch-kopf' }
   let(:resource) do
-    Puppet::Type.type(:elasticsearch_plugin).new(
+    Puppet::Type.type(:elasticsearch_old_plugin).new(
       :name     => resource_name,
       :ensure   => :present,
       :provider => 'plugin'
