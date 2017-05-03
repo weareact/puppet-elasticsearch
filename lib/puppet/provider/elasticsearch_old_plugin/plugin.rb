@@ -104,7 +104,7 @@ Puppet::Type.type(:elasticsearch_old_plugin).provide(:plugin) do
     commands << install1x if is1x?
     commands << install2x if is2x?
     debug("Commands: #{commands.inspect}")
-    
+
     retry_count = 3
     retry_times = 0
     begin
