@@ -3,7 +3,7 @@ require 'timeout'
 
 module Puppet
   module Util
-    class EsInstanceValidator
+    class EsInstanceValidator_old
       attr_reader :instance_server
       attr_reader :instance_port
 
@@ -33,4 +33,3 @@ module Puppet
     end
   end
 end
-
