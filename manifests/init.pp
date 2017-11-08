@@ -304,8 +304,8 @@
 #   Default value: undef
 #
 # [*file_rolling_type*]
-#   Configuration for the file appender rotation. It can be 'dailyRollingFile'
-#   or 'rollingFile'. The first rotates by name, and the second one by size.
+#   Configuration for the file appender rotation. It can be 'dailyRollingFile',
+#   'rollingFile' or 'file'. The first rotates by name, and the second one by size.
 #   Value type is string
 #   Default value: dailyRollingFile
 #
@@ -435,7 +435,7 @@ class elasticsearch(
     fail("\"${status}\" is not a valid status parameter value")
   }
 
-  if ! ($file_rolling_type in [ 'dailyRollingFile', 'rollingFile']) {
+  if ! ($file_rolling_type in [ 'dailyRollingFile', 'rollingFile', 'file' ]) {
     fail("\"${file_rolling_type}\" is not a valid type")
   }
 
