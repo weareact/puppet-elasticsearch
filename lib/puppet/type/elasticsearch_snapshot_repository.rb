@@ -21,6 +21,7 @@ Puppet::Type.newtype(:elasticsearch_snapshot_repository) do
 
   newparam(:type) do
     desc 'Repository type.'
+    defaultto 'fs'
   end
 
   newproperty(:compress) do
