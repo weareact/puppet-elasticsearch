@@ -4,10 +4,10 @@ require 'puppet/file_serving/content'
 require 'puppet/file_serving/metadata'
 require 'puppet/parameter/boolean'
 
-require 'puppet_x/elastic/deep_implode'
-require 'puppet_x/elastic/deep_to_i'
+require 'puppet_x_old/elastic/deep_implode'
+require 'puppet_x_old/elastic/deep_to_i'
 
-Puppet::Type.newtype(:elasticsearch_template) do
+Puppet::Type.newtype(:elasticsearch_old_template) do
   desc 'Manages Elasticsearch index templates.'
 
   ensurable do
@@ -42,7 +42,7 @@ Puppet::Type.newtype(:elasticsearch_template) do
       # can define those with the index json key absent, but the API
       # always fully qualifies them.
       {'order'=>0,'aliases'=>{},'mappings'=>{}}.merge(
-        Puppet_X::Elastic::deep_to_i(
+        Puppet_X_old::Elastic::deep_to_i(
           value.tap do |val|
             if val.has_key? 'settings'
               unless val['settings'].has_key? 'index'
@@ -58,8 +58,8 @@ Puppet::Type.newtype(:elasticsearch_template) do
     end
 
     def insync?(is)
-      Puppet_X::Elastic::deep_implode(is) == \
-        Puppet_X::Elastic::deep_implode(should)
+      Puppet_X_old::Elastic::deep_implode(is) == \
+        Puppet_X_old::Elastic::deep_implode(should)
     end
   end
 

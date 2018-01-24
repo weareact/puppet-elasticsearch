@@ -4,7 +4,7 @@ require 'json'
 require 'net/http'
 require 'openssl'
 
-Puppet::Type.type(:elasticsearch_snapshot_repository).provide(:ruby) do
+Puppet::Type.type(:elasticsearch_old_snapshot_repository).provide(:ruby) do
   desc <<-ENDHEREDOC
     A REST API based provider to manage Elasticsearch Snapshot Repositories.
   ENDHEREDOC

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe 'elasticsearch::instance', :type => 'define' do
+describe 'elasticsearch_old::instance', :type => 'define' do
 
   let(:title) { 'es-01' }
-  let(:pre_condition) { 'class { "elasticsearch": }' }
+  let(:pre_condition) { 'class { "elasticsearch_old": }' }
 
   on_supported_os.each do |os, facts|
 
@@ -48,11 +48,11 @@ describe 'elasticsearch::instance', :type => 'define' do
         facts.merge({ 'scenario' => '', 'common' => '' })
       end
 
-      it { should contain_elasticsearch__service(
+      it { should contain_elasticsearch_old__service(
         'es-01'
       ).with(
         :init_template =>
-          "elasticsearch/etc/init.d/elasticsearch.#{initscript}.erb",
+          "elasticsearch_old/etc/init.d/elasticsearch.#{initscript}.erb",
         :init_defaults => {
           "CONF_DIR"  => "/etc/elasticsearch/es-01",
           "CONF_FILE" => "/etc/elasticsearch/es-01/elasticsearch.yml",
@@ -94,47 +94,47 @@ describe 'elasticsearch::instance', :type => 'define' do
     context 'do not happen when restart_on_change is false (default)' do
       it { should_not contain_datacat(
         '/etc/elasticsearch/es-01/elasticsearch.yml'
-      ).that_notifies('Elasticsearch::Service[es-01]') }
+      ).that_notifies('Elasticsearch_old::Service[es-01]') }
       it { should_not contain_package(
         'elasticsearch'
-      ).that_notifies('Elasticsearch::Service[es-01]') }
+      ).that_notifies('Elasticsearch_old::Service[es-01]') }
     end
 
     context 'happen when restart_on_change is true' do
-      let(:pre_condition) { 'class { "elasticsearch": restart_on_change => true }' }
+      let(:pre_condition) { 'class { "elasticsearch_old": restart_on_change => true }' }
 
       it { should contain_datacat(
         '/etc/elasticsearch/es-01/elasticsearch.yml'
-      ).that_notifies('Elasticsearch::Service[es-01]') }
+      ).that_notifies('Elasticsearch_old::Service[es-01]') }
       it { should contain_package(
         'elasticsearch'
-      ).that_notifies('Elasticsearch::Service[es-01]') }
+      ).that_notifies('Elasticsearch_old::Service[es-01]') }
     end
 
     context 'on package change' do
       let(:pre_condition) { %q{
-        class { "elasticsearch": restart_package_change => true }
+        class { "elasticsearch_old": restart_package_change => true }
       }}
 
       it { should_not contain_datacat(
         '/etc/elasticsearch/es-01/elasticsearch.yml'
-      ).that_notifies('Elasticsearch::Service[es-01]') }
+      ).that_notifies('Elasticsearch_old::Service[es-01]') }
       it { should contain_package(
         'elasticsearch'
-      ).that_notifies('Elasticsearch::Service[es-01]') }
+      ).that_notifies('Elasticsearch_old::Service[es-01]') }
     end
 
     context 'on config change' do
       let(:pre_condition) { %q{
-        class { "elasticsearch": restart_config_change => true }
+        class { "elasticsearch_old": restart_config_change => true }
       }}
 
       it { should contain_datacat(
         '/etc/elasticsearch/es-01/elasticsearch.yml'
-      ).that_notifies('Elasticsearch::Service[es-01]') }
+      ).that_notifies('Elasticsearch_old::Service[es-01]') }
       it { should_not contain_package(
         'elasticsearch'
-      ).that_notifies('Elasticsearch::Service[es-01]') }
+      ).that_notifies('Elasticsearch_old::Service[es-01]') }
     end
 
   end
@@ -157,7 +157,7 @@ describe 'elasticsearch::instance', :type => 'define' do
 
     context 'set in main class' do
       let(:pre_condition) { <<-EOS
-        class { "elasticsearch":
+        class { "elasticsearch_old":
           configdir => "/etc/elasticsearch-config"
         }
       EOS
@@ -211,7 +211,7 @@ describe 'elasticsearch::instance', :type => 'define' do
 
     context 'single from main config ' do
       let(:pre_condition) { <<-EOS
-        class { "elasticsearch":
+        class { "elasticsearch_old":
           datadir => "/var/lib/elasticsearch-data"
         }
       EOS
@@ -236,7 +236,7 @@ describe 'elasticsearch::instance', :type => 'define' do
 
     context 'multiple from main config' do
       let(:pre_condition) { <<-EOS
-        class { "elasticsearch":
+        class { "elasticsearch_old":
           datadir => [
             "/var/lib/elasticsearch-data01",
             "/var/lib/elasticsearch-data02"
@@ -316,7 +316,7 @@ describe 'elasticsearch::instance', :type => 'define' do
 
     context "single from main config " do
       let(:pre_condition) { <<-EOS
-        class { "elasticsearch":
+        class { "elasticsearch_old":
           logdir => "/var/log/elasticsearch-logs"
         }
       EOS
@@ -381,7 +381,7 @@ describe 'elasticsearch::instance', :type => 'define' do
 
       context 'config' do
         let(:pre_condition) { <<-EOS
-          class { "elasticsearch":
+          class { "elasticsearch_old":
             logging_config => {
               "index.search.slowlog" => "DEBUG, index_search_slow_log_file"
             }
@@ -394,7 +394,7 @@ describe 'elasticsearch::instance', :type => 'define' do
 
       context 'logging file ' do
         let(:pre_condition) { <<-EOS
-          class { "elasticsearch":
+          class { "elasticsearch_old":
             logging_file => "puppet:///path/to/logging.yml"
           }
         EOS
@@ -428,7 +428,7 @@ describe 'elasticsearch::instance', :type => 'define' do
 
     describe 'rollingFile apender' do
       let(:pre_condition) {%q{
-        class { 'elasticsearch':
+        class { 'elasticsearch_old':
           file_rolling_type             => 'rollingFile',
           rolling_file_max_backup_index => 10,
           rolling_file_max_file_size    => '100MB',
@@ -448,7 +448,7 @@ describe 'elasticsearch::instance', :type => 'define' do
   context 'running as an other user' do
 
     let(:pre_condition) { <<-EOS
-      class { "elasticsearch":
+      class { "elasticsearch_old":
         elasticsearch_user => "myesuser",
         elasticsearch_group => "myesgroup"
       }
@@ -465,7 +465,7 @@ describe 'elasticsearch::instance', :type => 'define' do
 
   context 'setting different service status then main class' do
 
-    let(:pre_condition) { 'class {"elasticsearch": status => "enabled" }'  }
+    let(:pre_condition) { 'class {"elasticsearch_old": status => "enabled" }'  }
 
     context 'status option' do
 
@@ -482,18 +482,18 @@ describe 'elasticsearch::instance', :type => 'define' do
   context 'init_template' do
 
     context 'default' do
-      it { should contain_elasticsearch__service('es-01').with(:init_template => 'elasticsearch/etc/init.d/elasticsearch.RedHat.erb') }
+      it { should contain_elasticsearch_old__service('es-01').with(:init_template => 'elasticsearch_old/etc/init.d/elasticsearch.RedHat.erb') }
     end
 
     context 'override in main class' do
       let(:pre_condition) { <<-EOS
-        class { "elasticsearch":
-          init_template => "elasticsearch/etc/init.d/elasticsearch.systemd.erb"
+        class { "elasticsearch_old":
+          init_template => "elasticsearch_old/etc/init.d/elasticsearch.systemd.erb"
         }
       EOS
       }
 
-      it { should contain_elasticsearch__service('es-01').with(:init_template => 'elasticsearch/etc/init.d/elasticsearch.systemd.erb') }
+      it { should contain_elasticsearch_old__service('es-01').with(:init_template => 'elasticsearch_old/etc/init.d/elasticsearch.systemd.erb') }
     end
 
   end
@@ -501,7 +501,7 @@ describe 'elasticsearch::instance', :type => 'define' do
   describe 'system_key' do
     context 'inherited' do
       let(:pre_condition) {%q{
-        class { 'elasticsearch':
+        class { 'elasticsearch_old':
           system_key => '/tmp/key'
         }
       }}

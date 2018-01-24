@@ -1,9 +1,9 @@
-# == Define: elasticsearch::plugin
+# == Define: elasticsearch_old::plugin
 #
 # This define allows you to install arbitrary Elasticsearch plugins
 # either by using the default repositories or by specifying an URL
 #
-# All default values are defined in the elasticsearch::params class.
+# All default values are defined in the elasticsearch_old::params class.
 #
 #
 # === Parameters
@@ -67,10 +67,10 @@
 # === Examples
 #
 # # From official repository
-# elasticsearch::plugin{'mobz/elasticsearch-head': module_dir => 'head'}
+# elasticsearch_old::plugin{'mobz/elasticsearch-head': module_dir => 'head'}
 #
 # # From custom url
-# elasticsearch::plugin{ 'elasticsearch-jetty':
+# elasticsearch_old::plugin{ 'elasticsearch-jetty':
 #  module_dir => 'elasticsearch-jetty',
 #  url        => 'https://oss-es-plugins.s3.amazonaws.com/elasticsearch-jetty/elasticsearch-jetty-0.90.0.zip',
 # }
@@ -81,7 +81,7 @@
 # * Dennis Konert <mailto:dkonert@gmail.com>
 # * Richard Pijnenburg <mailto:richard.pijnenburg@elasticsearch.com>
 #
-define elasticsearch::plugin(
+define elasticsearch_old::plugin (
   $instances      = undef,
   $module_dir     = undef,
   $ensure         = 'present',
@@ -93,7 +93,7 @@ define elasticsearch::plugin(
   $proxy_password = undef,
 ) {
 
-  include elasticsearch
+  include elasticsearch_old
 
   case $ensure {
     'installed', 'present': {
@@ -106,21 +106,21 @@ define elasticsearch::plugin(
     }
     'absent': {
       $_file_ensure = $ensure
-      $_file_before = File[$elasticsearch::plugindir]
+      $_file_before = File[$elasticsearch_old::plugindir]
     }
     default: {
       fail("'${ensure}' is not a valid ensure parameter value")
     }
   }
 
-  if ! empty($instances) and $elasticsearch::restart_plugin_change {
-    Elasticsearch_plugin[$name] {
-      notify +> Elasticsearch::Instance[$instances],
+  if ! empty($instances) and $elasticsearch_old::restart_plugin_change {
+    Elasticsearch_old_plugin[$name] {
+      notify +> Elasticsearch_old::Instance[$instances],
     }
   }
 
   # set proxy by override or parse and use proxy_url from
-  # elasticsearch::proxy_url or use no proxy at all
+  # elasticsearch_old::proxy_url or use no proxy at all
 
   if ($proxy_host != undef and $proxy_port != undef) {
     if ($proxy_username != undef and $proxy_password != undef) {
@@ -129,8 +129,8 @@ define elasticsearch::plugin(
       $_proxy_auth = undef
     }
     $_proxy = "http://${_proxy_auth}${proxy_host}:${proxy_port}"
-  } elsif ($elasticsearch::proxy_url != undef) {
-    $_proxy = $elasticsearch::proxy_url
+  } elsif ($elasticsearch_old::proxy_url != undef) {
+    $_proxy = $elasticsearch_old::proxy_url
   } else {
     $_proxy = undef
   }
@@ -140,12 +140,12 @@ define elasticsearch::plugin(
     $filenameArray = split($source, '/')
     $basefilename = $filenameArray[-1]
 
-    $file_source = "${elasticsearch::package_dir}/${basefilename}"
+    $file_source = "${elasticsearch_old::package_dir}/${basefilename}"
 
     file { $file_source:
       ensure => 'file',
       source => $source,
-      before => Elasticsearch_plugin[$name],
+      before => Elasticsearch_old_plugin[$name],
     }
 
   } else {
@@ -158,15 +158,15 @@ define elasticsearch::plugin(
 
   $_module_dir = es_plugin_name($module_dir, $name)
 
-  elasticsearch_plugin { $name:
+  elasticsearch_old_plugin { $name:
     ensure      => $ensure,
     source      => $file_source,
     url         => $url,
     proxy       => $_proxy,
-    plugin_dir  => $::elasticsearch::plugindir,
+    plugin_dir  => $::elasticsearch_old::plugindir,
     plugin_path => $module_dir,
   } ->
-  file { "${elasticsearch::plugindir}/${_module_dir}":
+  file { "${elasticsearch_old::plugindir}/${_module_dir}":
     ensure  => $_file_ensure,
     mode    => 'o+Xr',
     recurse => true,

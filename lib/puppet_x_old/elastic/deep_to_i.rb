@@ -1,4 +1,4 @@
-module Puppet_X
+module Puppet_X_old
   module Elastic
     # This ugly hack is required due to the fact Puppet passes in the
     # puppet-native hash with stringified numerics, which causes the

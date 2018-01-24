@@ -11,7 +11,7 @@
   "dependencies": [
     {
       "name": "puppetlabs/apt",
-      "version_requirement": ">= 2.0.0 < 3.0.0"
+      "version_requirement": ">= 2.0.0 < 5.0.0"
     },
     {
       "name": "richardc/datacat",
@@ -30,8 +30,8 @@
       "version_requirement": ">= 1.0.6 < 2.0.0"
     },
     {
-      "name": "ceritsc/yum",
-      "version_requirement": ">= 0.9.6"
+      "name": "puppet/yum",
+      "version_requirement": ">= 1.0 < 3.0"
     }
   ],
   "operatingsystem_support": [

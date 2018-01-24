@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'elasticsearch::service::systemd', :type => 'define' do
+describe 'elasticsearch_old::service::systemd', :type => 'define' do
 
   on_supported_os({
     :hardwaremodels => ['x86_64'],
@@ -24,7 +24,7 @@ describe 'elasticsearch::service::systemd', :type => 'define' do
       }) }
       let(:title) { 'es-01' }
       let(:pre_condition) {%q{
-        class { "elasticsearch":
+        class { "elasticsearch_old":
           config => { "node" => {"name" => "test" }}
         }
       }}
@@ -43,7 +43,7 @@ describe 'elasticsearch::service::systemd', :type => 'define' do
           :status => 'enabled'
         } end
 
-        it { should contain_elasticsearch__service__systemd('es-01') }
+        it { should contain_elasticsearch_old__service__systemd('es-01') }
         it { should contain_exec('systemd_reload_es-01')
           .with(:command => '/bin/systemctl daemon-reload') }
         it { should contain_service('elasticsearch-instance-es-01')
@@ -56,7 +56,7 @@ describe 'elasticsearch::service::systemd', :type => 'define' do
           :ensure => 'absent'
         } end
 
-        it { should contain_elasticsearch__service__systemd('es-01') }
+        it { should contain_elasticsearch_old__service__systemd('es-01') }
         it { should contain_exec('systemd_reload_es-01')
           .with(:command => '/bin/systemctl daemon-reload') }
         it { should contain_service('elasticsearch-instance-es-01')
@@ -70,7 +70,7 @@ describe 'elasticsearch::service::systemd', :type => 'define' do
         } end
 
 
-        it { should contain_elasticsearch__service__systemd('es-01') }
+        it { should contain_elasticsearch_old__service__systemd('es-01') }
         it { should contain_service('elasticsearch-instance-es-01')
           .with(:enable => false) }
         it { should contain_augeas('defaults_es-01') }
@@ -115,7 +115,7 @@ describe 'elasticsearch::service::systemd', :type => 'define' do
 
         context 'restarts when "restart_on_change" is true' do
           let(:pre_condition) {%q{
-            class { "elasticsearch":
+            class { "elasticsearch_old":
               config => { "node" => {"name" => "test" }},
               restart_on_change => true
             }
@@ -174,7 +174,7 @@ describe 'elasticsearch::service::systemd', :type => 'define' do
 
         context 'does not restart when "restart_on_change" is false' do
           let(:pre_condition) {%q{
-            class { "elasticsearch":
+            class { "elasticsearch_old":
               config => { "node" => {"name" => "test" }},
             }
           }}
@@ -198,7 +198,7 @@ describe 'elasticsearch::service::systemd', :type => 'define' do
 
       context 'init file' do
         let(:pre_condition) {%q{
-          class { "elasticsearch":
+          class { "elasticsearch_old":
             config => { "node" => {"name" => "test" }}
           }
         }}
@@ -208,14 +208,14 @@ describe 'elasticsearch::service::systemd', :type => 'define' do
             :ensure => 'present',
             :status => 'enabled',
             :init_template =>
-              'elasticsearch/etc/init.d/elasticsearch.systemd.erb'
+              'elasticsearch_old/etc/init.d/elasticsearch.systemd.erb'
           } end
 
           it do
-            should contain_elasticsearch_service_file(
+            should contain_elasticsearch_old_service_file(
               "#{systemd_service_path}/elasticsearch-es-01.service"
             ).with(
-              :before => "File[#{systemd_service_path}/elasticsearch-es-01.service]"
+              :before => ["File[#{systemd_service_path}/elasticsearch-es-01.service]"]
             )
           end
 
@@ -230,7 +230,7 @@ describe 'elasticsearch::service::systemd', :type => 'define' do
 
         context 'restarts when "restart_on_change" is true' do
           let(:pre_condition) {%q{
-            class { "elasticsearch":
+            class { "elasticsearch_old":
               config => { "node" => {"name" => "test" }},
               restart_on_change => true
             }
@@ -240,7 +240,7 @@ describe 'elasticsearch::service::systemd', :type => 'define' do
             :ensure => 'present',
             :status => 'enabled',
             :init_template =>
-              'elasticsearch/etc/init.d/elasticsearch.systemd.erb'
+              'elasticsearch_old/etc/init.d/elasticsearch.systemd.erb'
           } end
 
           it { should contain_file(
@@ -258,7 +258,7 @@ describe 'elasticsearch::service::systemd', :type => 'define' do
 
         context 'does not restart when "restart_on_change" is false' do
           let(:pre_condition) {%q{
-            class { "elasticsearch":
+            class { "elasticsearch_old":
               config => { "node" => {"name" => "test" }},
             }
           }}
@@ -267,7 +267,7 @@ describe 'elasticsearch::service::systemd', :type => 'define' do
             :ensure => 'present',
             :status => 'enabled',
             :init_template =>
-              'elasticsearch/etc/init.d/elasticsearch.systemd.erb'
+              'elasticsearch_old/etc/init.d/elasticsearch.systemd.erb'
           } end
 
           it { should_not contain_file(

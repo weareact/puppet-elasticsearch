@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'elasticsearch::service::init', :type => 'define' do
+describe 'elasticsearch_old::service::init', :type => 'define' do
 
   let :facts do {
     :operatingsystem => 'CentOS',
@@ -13,7 +13,7 @@ describe 'elasticsearch::service::init', :type => 'define' do
 
   let(:title) { 'es-01' }
   let(:pre_condition) {%q{
-    class { "elasticsearch":
+    class { "elasticsearch_old":
       config => { "node" => {"name" => "test" }}
     }
   }}
@@ -25,7 +25,7 @@ describe 'elasticsearch::service::init', :type => 'define' do
       :status => 'enabled'
     } end
 
-    it { should contain_elasticsearch__service__init('es-01') }
+    it { should contain_elasticsearch_old__service__init('es-01') }
     it { should contain_service('elasticsearch-instance-es-01')
       .with(:ensure => 'running', :enable => true) }
   end
@@ -36,7 +36,7 @@ describe 'elasticsearch::service::init', :type => 'define' do
       :ensure => 'absent'
     } end
 
-    it { should contain_elasticsearch__service__init('es-01') }
+    it { should contain_elasticsearch_old__service__init('es-01') }
     it { should contain_service('elasticsearch-instance-es-01')
       .with(:ensure => 'stopped', :enable => false) }
   end
@@ -47,7 +47,7 @@ describe 'elasticsearch::service::init', :type => 'define' do
         :status => 'unmanaged'
       } end
 
-    it { should contain_elasticsearch__service__init('es-01') }
+    it { should contain_elasticsearch_old__service__init('es-01') }
     it { should contain_service('elasticsearch-instance-es-01')
       .with(:enable => false) }
     it { should contain_augeas('defaults_es-01') }
@@ -98,7 +98,7 @@ describe 'elasticsearch::service::init', :type => 'define' do
 
     context 'restarts when "restart_on_change" is true' do
       let(:pre_condition) { %q{
-        class { "elasticsearch":
+        class { "elasticsearch_old":
           config => { "node" => {"name" => "test" }},
           restart_on_change => true
         }
@@ -158,7 +158,7 @@ describe 'elasticsearch::service::init', :type => 'define' do
 
     context 'does not restart when "restart_on_change" is false' do
       let(:pre_condition) { %q{
-        class { "elasticsearch":
+        class { "elasticsearch_old":
           config => { "node" => {"name" => "test" }},
         }
       }}
@@ -197,7 +197,7 @@ describe 'elasticsearch::service::init', :type => 'define' do
 
   context 'init file' do
     let(:pre_condition) {%q{
-      class { "elasticsearch":
+      class { "elasticsearch_old":
         config => { "node" => {"name" => "test" }}
       }
     }}
@@ -207,11 +207,11 @@ describe 'elasticsearch::service::init', :type => 'define' do
         :ensure => 'present',
         :status => 'enabled',
         :init_template =>
-          'elasticsearch/etc/init.d/elasticsearch.RedHat.erb'
+          'elasticsearch_old/etc/init.d/elasticsearch.RedHat.erb'
       } end
 
       it do
-        should contain_elasticsearch_service_file(
+        should contain_elasticsearch_old_service_file(
           '/etc/init.d/elasticsearch-es-01'
         ).that_comes_before(
           'File[/etc/init.d/elasticsearch-es-01]'
@@ -229,7 +229,7 @@ describe 'elasticsearch::service::init', :type => 'define' do
 
     context 'restarts when "restart_on_change" is true' do
       let(:pre_condition) { %q{
-        class { "elasticsearch":
+        class { "elasticsearch_old":
           config => { "node" => {"name" => "test" }},
           restart_on_change => true
         }
@@ -239,7 +239,7 @@ describe 'elasticsearch::service::init', :type => 'define' do
         :ensure => 'present',
         :status => 'enabled',
         :init_template =>
-          'elasticsearch/etc/init.d/elasticsearch.RedHat.erb'
+          'elasticsearch_old/etc/init.d/elasticsearch.RedHat.erb'
       } end
 
       it { should contain_file(
@@ -256,7 +256,7 @@ describe 'elasticsearch::service::init', :type => 'define' do
 
     context 'does not restart when "restart_on_change" is false' do
       let(:pre_condition) { %q{
-        class { "elasticsearch":
+        class { "elasticsearch_old":
           config => { "node" => {"name" => "test" }},
         }
       }}
@@ -265,7 +265,7 @@ describe 'elasticsearch::service::init', :type => 'define' do
         :ensure => 'present',
         :status => 'enabled',
         :init_template =>
-          'elasticsearch/etc/init.d/elasticsearch.RedHat.erb'
+          'elasticsearch_old/etc/init.d/elasticsearch.RedHat.erb'
       } end
 
       it { should_not contain_file(

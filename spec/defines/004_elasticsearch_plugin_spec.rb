@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'elasticsearch::plugin', :type => 'define' do
+describe 'elasticsearch_old::plugin', :type => 'define' do
 
   let(:title) { 'mobz/elasticsearch-head/1.0.0' }
   let :facts do {
@@ -13,7 +13,7 @@ describe 'elasticsearch::plugin', :type => 'define' do
   } end
 
   let(:pre_condition) {%q{
-    class { "elasticsearch":
+    class { "elasticsearch_old":
       config => {
         "node" => {
           "name" => "test"
@@ -52,16 +52,16 @@ describe 'elasticsearch::plugin', :type => 'define' do
         :instances  => 'es-01'
       } end
 
-      it { should contain_elasticsearch__plugin(
+      it { should contain_elasticsearch_old__plugin(
         'mobz/elasticsearch-head/1.0.0'
       ) }
-      it { should contain_elasticsearch_plugin(
+      it { should contain_elasticsearch_old_plugin(
         'mobz/elasticsearch-head/1.0.0'
       ) }
       it { should contain_file(
         '/usr/share/elasticsearch/plugins/head'
       ).that_requires(
-        'Elasticsearch_plugin[mobz/elasticsearch-head/1.0.0]'
+        'Elasticsearch_old_plugin[mobz/elasticsearch-head/1.0.0]'
       ) }
     end
 
@@ -73,10 +73,10 @@ describe 'elasticsearch::plugin', :type => 'define' do
         :instances  => 'es-01'
       } end
 
-      it { should contain_elasticsearch__plugin(
+      it { should contain_elasticsearch_old__plugin(
         'mobz/elasticsearch-head/1.0.0'
       ) }
-      it { should contain_elasticsearch_plugin(
+      it { should contain_elasticsearch_old_plugin(
         'mobz/elasticsearch-head/1.0.0'
       ).with(
         :ensure => 'absent'
@@ -84,7 +84,7 @@ describe 'elasticsearch::plugin', :type => 'define' do
       it { should contain_file(
         '/usr/share/elasticsearch/plugins/head'
       ).that_requires(
-        'Elasticsearch_plugin[mobz/elasticsearch-head/1.0.0]'
+        'Elasticsearch_old_plugin[mobz/elasticsearch-head/1.0.0]'
       ) }
     end
 
@@ -100,8 +100,8 @@ describe 'elasticsearch::plugin', :type => 'define' do
         :url        => 'https://github.com/mobz/elasticsearch-head/archive/master.zip',
       } end
 
-      it { should contain_elasticsearch__plugin('mobz/elasticsearch-head/1.0.0') }
-      it { should contain_elasticsearch_plugin('mobz/elasticsearch-head/1.0.0').with(:ensure => 'present', :url => 'https://github.com/mobz/elasticsearch-head/archive/master.zip') }
+      it { should contain_elasticsearch_old__plugin('mobz/elasticsearch-head/1.0.0') }
+      it { should contain_elasticsearch_old_plugin('mobz/elasticsearch-head/1.0.0').with(:ensure => 'present', :url => 'https://github.com/mobz/elasticsearch-head/archive/master.zip') }
     end
 
   end
@@ -115,9 +115,9 @@ describe 'elasticsearch::plugin', :type => 'define' do
         :source     => 'puppet:///path/to/my/plugin.zip',
       } end
 
-      it { should contain_elasticsearch__plugin('head') }
-      it { should contain_file('/opt/elasticsearch/swdl/plugin.zip').with(:source => 'puppet:///path/to/my/plugin.zip', :before => 'Elasticsearch_plugin[head]') }
-      it { should contain_elasticsearch_plugin('head').with(:ensure => 'present', :source => '/opt/elasticsearch/swdl/plugin.zip') }
+      it { should contain_elasticsearch_old__plugin('head') }
+      it { should contain_file('/opt/elasticsearch/swdl/plugin.zip').with(:source => 'puppet:///path/to/my/plugin.zip', :before => 'Elasticsearch_old_plugin[head]') }
+      it { should contain_elasticsearch_old_plugin('head').with(:ensure => 'present', :source => '/opt/elasticsearch/swdl/plugin.zip') }
 
   end
 
@@ -132,63 +132,63 @@ describe 'elasticsearch::plugin', :type => 'define' do
 
     context 'restart_on_change set to false (default)' do
       let(:pre_condition) { %q{
-        class { "elasticsearch": }
+        class { "elasticsearch_old": }
 
-        elasticsearch::instance { 'es-01': }
+        elasticsearch_old::instance { 'es-01': }
       }}
 
-      it { should_not contain_elasticsearch_plugin(
+      it { should_not contain_elasticsearch_old_plugin(
         'head'
       ).that_notifies(
-        'Elasticsearch::Service[es-01]'
+        'Elasticsearch_old::Service[es-01]'
       )}
     end
 
     context 'restart_on_change set to true' do
       let(:pre_condition) { %q{
-        class { "elasticsearch":
+        class { "elasticsearch_old":
           restart_on_change => true,
         }
 
-        elasticsearch::instance { 'es-01': }
+        elasticsearch_old::instance { 'es-01': }
       }}
 
-      it { should contain_elasticsearch_plugin(
+      it { should contain_elasticsearch_old_plugin(
         'head'
       ).that_notifies(
-        'Elasticsearch::Service[es-01]'
+        'Elasticsearch_old::Service[es-01]'
       )}
     end
 
     context 'restart_plugin_change set to false (default)' do
       let(:pre_condition) { %q{
-        class { "elasticsearch":
+        class { "elasticsearch_old":
           restart_plugin_change => false,
         }
 
-        elasticsearch::instance { 'es-01': }
+        elasticsearch_old::instance { 'es-01': }
       }}
 
-      it { should_not contain_elasticsearch_plugin(
+      it { should_not contain_elasticsearch_old_plugin(
         'head'
       ).that_notifies(
-        'Elasticsearch::Service[es-01]'
+        'Elasticsearch_old::Service[es-01]'
       )}
     end
 
     context 'restart_plugin_change set to true' do
       let(:pre_condition) { %q{
-        class { "elasticsearch":
+        class { "elasticsearch_old":
           restart_plugin_change => true,
         }
 
-        elasticsearch::instance { 'es-01': }
+        elasticsearch_old::instance { 'es-01': }
       }}
 
-      it { should contain_elasticsearch_plugin(
+      it { should contain_elasticsearch_old_plugin(
         'head'
       ).that_notifies(
-        'Elasticsearch::Service[es-01]'
+        'Elasticsearch_old::Service[es-01]'
       )}
     end
 
@@ -207,7 +207,7 @@ describe 'elasticsearch::plugin', :type => 'define' do
           :proxy_port     => '8080'
         } end
 
-        it { should contain_elasticsearch_plugin(
+        it { should contain_elasticsearch_old_plugin(
           'head'
         ).with_proxy(
           'http://es.local:8080'
@@ -221,12 +221,12 @@ describe 'elasticsearch::plugin', :type => 'define' do
         } end
 
         let(:pre_condition) { %q{
-          class { 'elasticsearch':
+          class { 'elasticsearch_old':
             proxy_url => 'https://es.local:8080',
           }
         }}
 
-        it { should contain_elasticsearch_plugin(
+        it { should contain_elasticsearch_old_plugin(
           'head'
         ).with_proxy(
           'https://es.local:8080'
@@ -245,7 +245,7 @@ describe 'elasticsearch::plugin', :type => 'define' do
           :proxy_password => 'password'
         } end
 
-        it { should contain_elasticsearch_plugin(
+        it { should contain_elasticsearch_old_plugin(
           'head'
         ).with_proxy(
           'http://elastic:password@es.local:8080'
@@ -259,12 +259,12 @@ describe 'elasticsearch::plugin', :type => 'define' do
         } end
 
         let(:pre_condition) { %q{
-          class { 'elasticsearch':
+          class { 'elasticsearch_old':
             proxy_url => 'http://elastic:password@es.local:8080',
           }
         }}
 
-        it { should contain_elasticsearch_plugin(
+        it { should contain_elasticsearch_old_plugin(
           'head'
         ).with_proxy(
           'http://elastic:password@es.local:8080'
@@ -278,17 +278,17 @@ describe 'elasticsearch::plugin', :type => 'define' do
     describe 'present' do
       let(:title) { 'head' }
       let(:pre_condition) {%q{
-        class { 'elasticsearch': }
-        elasticsearch::instance { 'es-01': }
+        class { 'elasticsearch_old': }
+        elasticsearch_old::instance { 'es-01': }
       }}
       let :params do {
         :instances => 'es-01'
       } end
 
-      it { should contain_elasticsearch__plugin(
+      it { should contain_elasticsearch_old__plugin(
         'head'
       ).that_comes_before(
-        'Elasticsearch::Instance[es-01]'
+        'Elasticsearch_old::Instance[es-01]'
       )}
     end
   end

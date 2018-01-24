@@ -1,4 +1,4 @@
-Puppet::Type.newtype(:es_instance_conn_validator) do
+Puppet::Type.newtype(:es_instance_conn_validator_old) do
 
   @doc = "Verify that a connection can be successfully established between a node
   and the Elasticsearch instance. It could potentially be used for other

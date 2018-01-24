@@ -1,4 +1,4 @@
-# == Class: elasticsearch::service
+# == Class: elasticsearch_old::service
 #
 # This class exists to coordinate all service management related actions,
 # functionality and logical units in a central place.
@@ -57,19 +57,19 @@
 #
 # * Richard Pijnenburg <mailto:richard.pijnenburg@elasticsearch.com>
 #
-define elasticsearch::service(
-  $ensure             = $elasticsearch::ensure,
-  $status             = $elasticsearch::status,
+define elasticsearch_old::service (
+  $ensure             = $elasticsearch_old::ensure,
+  $status             = $elasticsearch_old::status,
   $init_defaults_file = undef,
   $init_defaults      = undef,
   $init_template      = undef,
   $service_flags      = undef,
 ) {
 
-  case $elasticsearch::real_service_provider {
+  case $elasticsearch_old::real_service_provider {
 
     'init': {
-      elasticsearch::service::init { $name:
+      elasticsearch_old::service::init { $name:
         ensure             => $ensure,
         status             => $status,
         init_defaults_file => $init_defaults_file,
@@ -78,7 +78,7 @@ define elasticsearch::service(
       }
     }
     'openbsd': {
-      elasticsearch::service::openbsd { $name:
+      elasticsearch_old::service::openbsd { $name:
         ensure        => $ensure,
         status        => $status,
         init_template => $init_template,
@@ -86,7 +86,7 @@ define elasticsearch::service(
       }
     }
     'systemd': {
-      elasticsearch::service::systemd { $name:
+      elasticsearch_old::service::systemd { $name:
         ensure             => $ensure,
         status             => $status,
         init_defaults_file => $init_defaults_file,
@@ -95,7 +95,7 @@ define elasticsearch::service(
       }
     }
     'openrc': {
-      elasticsearch::service::openrc { $name:
+      elasticsearch_old::service::openrc { $name:
         ensure             => $ensure,
         status             => $status,
         init_defaults_file => $init_defaults_file,
@@ -104,7 +104,7 @@ define elasticsearch::service(
       }
     }
     default: {
-      fail("Unknown service provider ${elasticsearch::real_service_provider}")
+      fail("Unknown service provider ${elasticsearch_old::real_service_provider}")
     }
 
   }

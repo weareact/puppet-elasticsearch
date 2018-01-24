@@ -1,6 +1,6 @@
-require 'puppet/provider/elastic_plugin'
+require 'puppet/provider/elastic_plugin_old'
 
-Puppet::Type.type(:elasticsearch_plugin).provide(
+Puppet::Type.type(:elasticsearch_old_plugin).provide(
   :plugin,
   :parent => Puppet::Provider::ElasticPlugin
 ) do

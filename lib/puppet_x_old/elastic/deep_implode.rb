@@ -1,4 +1,4 @@
-module Puppet_X
+module Puppet_X_old
   module Elastic
     def self.deep_implode(hash)
       ret = Hash.new

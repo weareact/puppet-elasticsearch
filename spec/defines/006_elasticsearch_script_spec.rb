@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'elasticsearch::script', :type => 'define' do
+describe 'elasticsearch_old::script', :type => 'define' do
 
   let :facts do {
     :operatingsystem => 'CentOS',
@@ -12,7 +12,7 @@ describe 'elasticsearch::script', :type => 'define' do
   } end
 
   let(:title) { 'foo' }
-  let(:pre_condition) { 'class {"elasticsearch": config => { "node" => {"name" => "test" }}}'}
+  let(:pre_condition) { 'class {"elasticsearch_old": config => { "node" => {"name" => "test" }}}'}
 
   context "Add a script" do
 
@@ -21,7 +21,7 @@ describe 'elasticsearch::script', :type => 'define' do
       :source   => 'puppet:///path/to/foo.groovy',
     } end
 
-    it { should contain_elasticsearch__script('foo') }
+    it { should contain_elasticsearch_old__script('foo') }
     it { should contain_file('/usr/share/elasticsearch/scripts/foo.groovy').with(:source => 'puppet:///path/to/foo.groovy', :ensure => 'present') }
   end
 
@@ -32,7 +32,7 @@ describe 'elasticsearch::script', :type => 'define' do
       :source => 'puppet:///path/to/foo.groovy',
     } end
 
-    it { should contain_elasticsearch__script('foo') }
+    it { should contain_elasticsearch_old__script('foo') }
     it { should contain_file('/usr/share/elasticsearch/scripts/foo.groovy').with(:source => 'puppet:///path/to/foo.groovy', :ensure => 'absent') }
   end
 

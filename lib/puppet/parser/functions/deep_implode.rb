@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__),"..","..",".."))
 
-require 'puppet_x/elastic/deep_implode'
+require 'puppet_x_old/elastic/deep_implode'
 
 module Puppet::Parser::Functions
   newfunction(
@@ -38,6 +38,6 @@ module Puppet::Parser::Functions
 
     return {} if arg.empty?
 
-    Puppet_X::Elastic::deep_implode arg
+    Puppet_X_old::Elastic::deep_implode arg
   end
 end

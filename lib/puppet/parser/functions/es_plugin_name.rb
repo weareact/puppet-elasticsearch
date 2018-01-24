@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__),"..","..",".."))
 
-require 'puppet_x/elastic/plugin_name'
+require 'puppet_x_old/elastic/plugin_name'
 
 module Puppet::Parser::Functions
   newfunction(
@@ -30,7 +30,7 @@ module Puppet::Parser::Functions
     end.first
 
     if ret
-      Puppet_X::Elastic::plugin_name ret
+      Puppet_X_old::Elastic::plugin_name ret
     else
       raise Puppet::Error,
         'could not determine plugin name'

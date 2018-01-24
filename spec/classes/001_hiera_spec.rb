@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'elasticsearch', :type => 'class' do
+describe 'elasticsearch_old', :type => 'class' do
 
   default_params = {
     :config  => { 'node.name' => 'foo' }
@@ -30,9 +30,9 @@ describe 'elasticsearch', :type => 'class' do
           })
         }
 
-        it { should contain_elasticsearch__instance('es-01').with(:config => { 'node.name' => 'es-01' }) }
-        it { should contain_elasticsearch__service('es-01') }
-        it { should contain_elasticsearch__service__init('es-01') }
+        it { should contain_elasticsearch_old__instance('es-01').with(:config => { 'node.name' => 'es-01' }) }
+        it { should contain_elasticsearch_old__service('es-01') }
+        it { should contain_elasticsearch_old__service__init('es-01') }
         it { should contain_service('elasticsearch-instance-es-01') }
         it { should contain_augeas('defaults_es-01') }
         it { should contain_file('/etc/elasticsearch/es-01').with(:ensure => 'directory') }
@@ -42,7 +42,7 @@ describe 'elasticsearch', :type => 'class' do
         it { should contain_exec('mkdir_logdir_elasticsearch_es-01').with(:command => 'mkdir -p /var/log/elasticsearch/es-01') }
         it { should contain_exec('mkdir_datadir_elasticsearch_es-01').with(:command => 'mkdir -p /usr/share/elasticsearch/data/es-01') }
         it { should contain_file('/usr/share/elasticsearch/data/es-01') }
-        it { should contain_elasticsearch_service_file('/etc/init.d/elasticsearch-es-01') }
+        it { should contain_elasticsearch_old_service_file('/etc/init.d/elasticsearch-es-01') }
         it { should contain_file('/etc/init.d/elasticsearch-es-01') }
         it { should contain_file('/etc/elasticsearch/es-01/scripts').with(:target => '/usr/share/elasticsearch/scripts') }
         it { should contain_datacat_fragment('main_config_es-01') }
@@ -59,9 +59,9 @@ describe 'elasticsearch', :type => 'class' do
           })
         }
 
-        it { should contain_elasticsearch__instance('es-01').with(:config => { 'node.name' => 'es-01' }) }
-        it { should contain_elasticsearch__service('es-01') }
-        it { should contain_elasticsearch__service__init('es-01') }
+        it { should contain_elasticsearch_old__instance('es-01').with(:config => { 'node.name' => 'es-01' }) }
+        it { should contain_elasticsearch_old__service('es-01') }
+        it { should contain_elasticsearch_old__service__init('es-01') }
         it { should contain_service('elasticsearch-instance-es-01') }
         it { should contain_augeas('defaults_es-01') }
         it { should contain_exec('mkdir_configdir_elasticsearch_es-01') }
@@ -73,16 +73,16 @@ describe 'elasticsearch', :type => 'class' do
         it { should contain_exec('mkdir_datadir_elasticsearch_es-01') }
         it { should contain_file('/usr/share/elasticsearch/data/es-01') }
         it { should contain_file('/var/log/elasticsearch/es-01') }
-        it { should contain_elasticsearch_service_file('/etc/init.d/elasticsearch-es-01') }
+        it { should contain_elasticsearch_old_service_file('/etc/init.d/elasticsearch-es-01') }
         it { should contain_file('/etc/init.d/elasticsearch-es-01') }
         it { should contain_file('/etc/elasticsearch/es-01/scripts').with(:target => '/usr/share/elasticsearch/scripts') }
         it { should contain_datacat_fragment('main_config_es-01') }
         it { should contain_datacat('/etc/elasticsearch/es-01/elasticsearch.yml') }
 
 
-        it { should contain_elasticsearch__instance('es-02').with(:config => { 'node.name' => 'es-02' }) }
-        it { should contain_elasticsearch__service('es-02') }
-        it { should contain_elasticsearch__service__init('es-02') }
+        it { should contain_elasticsearch_old__instance('es-02').with(:config => { 'node.name' => 'es-02' }) }
+        it { should contain_elasticsearch_old__service('es-02') }
+        it { should contain_elasticsearch_old__service__init('es-02') }
         it { should contain_service('elasticsearch-instance-es-02') }
         it { should contain_augeas('defaults_es-02') }
         it { should contain_exec('mkdir_configdir_elasticsearch_es-02') }
@@ -94,7 +94,7 @@ describe 'elasticsearch', :type => 'class' do
         it { should contain_exec('mkdir_datadir_elasticsearch_es-02') }
         it { should contain_file('/usr/share/elasticsearch/data/es-02') }
         it { should contain_file('/var/log/elasticsearch/es-02') }
-        it { should contain_elasticsearch_service_file('/etc/init.d/elasticsearch-es-02') }
+        it { should contain_elasticsearch_old_service_file('/etc/init.d/elasticsearch-es-02') }
         it { should contain_file('/etc/init.d/elasticsearch-es-02') }
         it { should contain_file('/etc/elasticsearch/es-02/scripts').with(:target => '/usr/share/elasticsearch/scripts') }
         it { should contain_file('/etc/elasticsearch/es-02/shield') }
@@ -115,8 +115,8 @@ describe 'elasticsearch', :type => 'class' do
         })
       }
 
-      it { should_not contain_elasticsearch__instance('es-01') }
-      it { should_not contain_elasticsearch__instance('es-02') }
+      it { should_not contain_elasticsearch_old__instance('es-01') }
+      it { should_not contain_elasticsearch_old__instance('es-02') }
 
     end
 
@@ -131,8 +131,8 @@ describe 'elasticsearch', :type => 'class' do
         })
       }
 
-      it { should contain_elasticsearch__plugin('mobz/elasticsearch-head/1.0.0').with(:ensure => 'present', :module_dir => 'head', :instances => ['es-01'] ) }
-      it { should contain_elasticsearch_plugin('mobz/elasticsearch-head/1.0.0') }
+      it { should contain_elasticsearch_old__plugin('mobz/elasticsearch-head/1.0.0').with(:ensure => 'present', :module_dir => 'head', :instances => ['es-01'] ) }
+      it { should contain_elasticsearch_old_plugin('mobz/elasticsearch-head/1.0.0') }
 
     end
 
@@ -145,7 +145,7 @@ describe 'elasticsearch', :type => 'class' do
         })
       }
 
-      it { should_not contain_elasticsearch__plugin(
+      it { should_not contain_elasticsearch_old__plugin(
         'mobz/elasticsearch-head/1.0.0'
       ) }
 
@@ -166,9 +166,9 @@ describe 'elasticsearch', :type => 'class' do
         })
       }
 
-      it { should contain_elasticsearch__instance('default').with(:config => { 'node.name' => 'default' }) }
-      it { should contain_elasticsearch__service('default') }
-      it { should contain_elasticsearch__service__init('default') }
+      it { should contain_elasticsearch_old__instance('default').with(:config => { 'node.name' => 'default' }) }
+      it { should contain_elasticsearch_old__service('default') }
+      it { should contain_elasticsearch_old__service__init('default') }
       it { should contain_service('elasticsearch-instance-default') }
       it { should contain_augeas('defaults_default') }
       it { should contain_exec('mkdir_configdir_elasticsearch_default') }
@@ -180,7 +180,7 @@ describe 'elasticsearch', :type => 'class' do
       it { should contain_exec('mkdir_datadir_elasticsearch_default') }
       it { should contain_file('/usr/share/elasticsearch/data/default') }
       it { should contain_file('/var/log/elasticsearch/default') }
-      it { should contain_elasticsearch_service_file('/etc/init.d/elasticsearch-default') }
+      it { should contain_elasticsearch_old_service_file('/etc/init.d/elasticsearch-default') }
       it { should contain_file('/etc/init.d/elasticsearch-default') }
       it { should contain_file('/etc/elasticsearch/default/scripts').with(:target => '/usr/share/elasticsearch/scripts') }
       it { should contain_file('/etc/elasticsearch/default/shield') }
@@ -188,9 +188,9 @@ describe 'elasticsearch', :type => 'class' do
       it { should contain_datacat('/etc/elasticsearch/default/elasticsearch.yml') }
 
 
-      it { should contain_elasticsearch__instance('es-01').with(:config => { 'node.name' => 'es-01' }) }
-      it { should contain_elasticsearch__service('es-01') }
-      it { should contain_elasticsearch__service__init('es-01') }
+      it { should contain_elasticsearch_old__instance('es-01').with(:config => { 'node.name' => 'es-01' }) }
+      it { should contain_elasticsearch_old__service('es-01') }
+      it { should contain_elasticsearch_old__service__init('es-01') }
       it { should contain_service('elasticsearch-instance-es-01') }
       it { should contain_augeas('defaults_es-01') }
       it { should contain_exec('mkdir_configdir_elasticsearch_es-01') }
@@ -202,7 +202,7 @@ describe 'elasticsearch', :type => 'class' do
       it { should contain_exec('mkdir_datadir_elasticsearch_es-01').with(:command => 'mkdir -p /usr/share/elasticsearch/data/es-01') }
       it { should contain_file('/usr/share/elasticsearch/data/es-01') }
       it { should contain_file('/var/log/elasticsearch/es-01') }
-      it { should contain_elasticsearch_service_file('/etc/init.d/elasticsearch-es-01') }
+      it { should contain_elasticsearch_old_service_file('/etc/init.d/elasticsearch-es-01') }
       it { should contain_file('/etc/init.d/elasticsearch-es-01') }
       it { should contain_file('/etc/elasticsearch/es-01/scripts').with(:target => '/usr/share/elasticsearch/scripts') }
       it { should contain_datacat_fragment('main_config_es-01') }

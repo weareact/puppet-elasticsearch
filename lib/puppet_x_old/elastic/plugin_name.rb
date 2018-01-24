@@ -1,4 +1,4 @@
-module Puppet_X
+module Puppet_X_old
   module Elastic
     # Attempt to guess at the plugin's final directory name
     def self.plugin_name(original_string)

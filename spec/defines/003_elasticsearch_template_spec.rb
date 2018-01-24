@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'elasticsearch::template', :type => 'define' do
+describe 'elasticsearch_old::template', :type => 'define' do
 
   let :facts do {
     :operatingsystem => 'CentOS',
@@ -13,7 +13,7 @@ describe 'elasticsearch::template', :type => 'define' do
 
   let(:title) { 'foo' }
   let(:pre_condition) { <<-EOS
-    class { 'elasticsearch' : }
+    class { 'elasticsearch_old' : }
   EOS
   }
 
@@ -45,10 +45,10 @@ describe 'elasticsearch::template', :type => 'define' do
       :validate_tls => false
     } end
 
-    it { should contain_elasticsearch__template('foo') }
-    it { should contain_es_instance_conn_validator('foo-template')
-      .that_comes_before('Elasticsearch_template[foo]') }
-    it { should contain_elasticsearch_template('foo').with(
+    it { should contain_elasticsearch_old__template('foo') }
+    it { should contain_es_instance_conn_validator_old('foo-template')
+      .that_comes_before('Elasticsearch_old_template[foo]') }
+    it { should contain_elasticsearch_old_template('foo').with(
       :ensure => 'present',
       :source => 'puppet:///path/to/foo.json',
       :protocol => 'https',
@@ -68,7 +68,7 @@ describe 'elasticsearch::template', :type => 'define' do
       :content => '{}',
     } end
     let(:pre_condition) { <<-EOS
-      class { 'elasticsearch' :
+      class { 'elasticsearch_old' :
         api_protocol => 'https',
         api_host => '127.0.0.1',
         api_port => 9201,
@@ -82,7 +82,7 @@ describe 'elasticsearch::template', :type => 'define' do
     EOS
     }
 
-    it { should contain_elasticsearch_template('foo').with(
+    it { should contain_elasticsearch_old_template('foo').with(
       :ensure => 'present',
       :content => '{}',
       :protocol => 'https',
@@ -104,7 +104,7 @@ describe 'elasticsearch::template', :type => 'define' do
       :file => '/path/to/other_foo.json',
     } end
 
-    it { should contain_elasticsearch_template('foo').with(
+    it { should contain_elasticsearch_old_template('foo').with(
       :ensure => 'present',
       :source => '/path/to/other_foo.json',
     ) }
@@ -116,7 +116,7 @@ describe 'elasticsearch::template', :type => 'define' do
       :ensure => 'absent',
     } end
 
-    it { should contain_elasticsearch_template('foo').with(
+    it { should contain_elasticsearch_old_template('foo').with(
       :ensure => 'absent'
     ) }
   end

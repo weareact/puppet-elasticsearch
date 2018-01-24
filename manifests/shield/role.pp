@@ -1,4 +1,4 @@
-# == Define: elasticsearch::shield::role
+# == Define: elasticsearch_old::shield::role
 #
 # Manage shield roles.
 #
@@ -26,7 +26,7 @@
 # === Examples
 #
 # # Creates and manages the role 'power_user' mapped to an LDAP group.
-# elasticsearch::shield::role { 'power_user':
+# elasticsearch_old::shield::role { 'power_user':
 #   privileges => {
 #     'cluster' => 'monitor',
 #     'indices' => {
@@ -42,7 +42,7 @@
 #
 # * Tyler Langlois <mailto:tyler@elastic.co>
 #
-define elasticsearch::shield::role (
+define elasticsearch_old::shield::role (
   $ensure     = 'present',
   $privileges = {},
   $mappings   = [],

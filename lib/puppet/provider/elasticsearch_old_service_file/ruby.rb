@@ -3,9 +3,9 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__),"..","..","..",".."))
 require 'pathname'
 require 'puppet/util/filetype'
 
-require 'puppet_x/elastic/es_versioning'
+require 'puppet_x_old/elastic/es_versioning'
 
-Puppet::Type.type(:elasticsearch_service_file).provide(:ruby) do
+Puppet::Type.type(:elasticsearch_old_service_file).provide(:ruby) do
   desc <<-ENDHEREDOC
     Provides management of elasticsearch service files.
   ENDHEREDOC
@@ -64,7 +64,7 @@ Puppet::Type.type(:elasticsearch_service_file).provide(:ruby) do
 
 
   def flush
-    opt_flag, opt_flags = Puppet_X::Elastic::EsVersioning.opt_flags(
+    opt_flag, opt_flags = Puppet_X_old::Elastic::EsVersioning.opt_flags(
       resource[:package_name], resource.catalog
     )
     template = ERB.new(resource[:content], 0, "-")

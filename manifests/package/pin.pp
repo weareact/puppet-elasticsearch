@@ -1,4 +1,4 @@
-# == Class: elasticsearch::package::pin
+# == Class: elasticsearch_old::package::pin
 #
 # Controls package pinning for the Elasticsearch package.
 #
@@ -9,7 +9,7 @@
 # === Examples
 #
 # This class may be imported by other classes to use its functionality:
-#   class { 'elasticsearch::package::pin': }
+#   class { 'elasticsearch_old::package::pin': }
 #
 # It is not intended to be used directly by external resources like node
 # definitions or other modules.
@@ -18,7 +18,7 @@
 #
 # * Tyler Langlois <mailto:tyler@elastic.co>
 #
-class elasticsearch::package::pin {
+class elasticsearch_old::package::pin {
 
   Exec {
     path => [ '/bin', '/usr/bin', '/usr/local/bin' ],
@@ -29,15 +29,15 @@ class elasticsearch::package::pin {
     'Debian': {
       include ::apt
 
-      if ($elasticsearch::ensure == 'absent') {
-        apt::pin { $elasticsearch::package_name:
-          ensure => $elasticsearch::ensure,
+      if ($elasticsearch_old::ensure == 'absent') {
+        apt::pin { $elasticsearch_old::package_name:
+          ensure => $elasticsearch_old::ensure,
         }
-      } elsif ($elasticsearch::version != false) {
-        apt::pin { $elasticsearch::package_name:
-          ensure   => $elasticsearch::ensure,
-          packages => $elasticsearch::package_name,
-          version  => $elasticsearch::version,
+      } elsif ($elasticsearch_old::version != false) {
+        apt::pin { $elasticsearch_old::package_name:
+          ensure   => $elasticsearch_old::ensure,
+          packages => $elasticsearch_old::package_name,
+          version  => $elasticsearch_old::version,
           priority => 1000,
         }
       }
@@ -45,7 +45,7 @@ class elasticsearch::package::pin {
     }
     'RedHat', 'Linux': {
 
-      if ($elasticsearch::ensure == 'absent') {
+      if ($elasticsearch_old::ensure == 'absent') {
         $_versionlock = '/etc/yum/pluginconf.d/versionlock.list'
         $_lock_line = '0:elasticsearch-'
         exec { 'elasticsearch_purge_versionlock.list':
@@ -55,10 +55,10 @@ class elasticsearch::package::pin {
             "grep -F '${_lock_line}' ${_versionlock}",
           ],
         }
-      } elsif ($elasticsearch::version != false) {
+      } elsif ($elasticsearch_old::version != false) {
         yum::versionlock {
-          "0:elasticsearch-${elasticsearch::pkg_version}.noarch":
-            ensure => $elasticsearch::ensure,
+          "0:elasticsearch-${elasticsearch_old::pkg_version}.noarch":
+            ensure => $elasticsearch_old::ensure,
         }
       }
 

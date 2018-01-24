@@ -1,13 +1,8 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__),"..","..",".."))
 
-require 'puppet/file_serving/content'
-require 'puppet/file_serving/metadata'
 require 'puppet/parameter/boolean'
 
-require 'puppet_x/elastic/deep_implode'
-require 'puppet_x/elastic/deep_to_i'
-
-Puppet::Type.newtype(:elasticsearch_snapshot_repository) do
+Puppet::Type.newtype(:elasticsearch_old_snapshot_repository) do
   desc 'Manages Elasticsearch snapshot repositories.'
 
   ensurable do

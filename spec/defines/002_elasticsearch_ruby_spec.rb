@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'elasticsearch::ruby', :type => 'define' do
+describe 'elasticsearch_old::ruby', :type => 'define' do
 
   let :facts do {
     :operatingsystem => 'CentOS',
@@ -14,7 +14,7 @@ describe 'elasticsearch::ruby', :type => 'define' do
 
       let(:title) { rubylib }
 
-      it { should contain_elasticsearch__ruby(rubylib) }
+      it { should contain_elasticsearch_old__ruby(rubylib) }
       it { should contain_package("ruby_#{rubylib}").with(:provider => 'gem', :name => rubylib) }
 
     end

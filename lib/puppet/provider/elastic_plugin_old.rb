@@ -1,7 +1,7 @@
 require 'uri'
-require 'puppet_x/elastic/plugin_name'
+require 'puppet_x_old/elastic/plugin_name'
 
-class Puppet::Provider::ElasticPlugin < Puppet::Provider
+class Puppet::Provider::ElasticPlugin_old < Puppet::Provider
 
   def homedir
     case Facter.value('osfamily')
@@ -48,7 +48,7 @@ class Puppet::Provider::ElasticPlugin < Puppet::Provider
     else
       File.join(
         @resource[:plugin_dir],
-        Puppet_X::Elastic::plugin_name(@resource[:name]),
+        Puppet_X_old::Elastic::plugin_name(@resource[:name]),
         '.name'
       )
     end
@@ -68,13 +68,13 @@ class Puppet::Provider::ElasticPlugin < Puppet::Provider
   def install1x
     if !@resource[:url].nil?
       [
-        Puppet_X::Elastic::plugin_name(@resource[:name]),
+        Puppet_X_old::Elastic::plugin_name(@resource[:name]),
         '--url',
         @resource[:url]
       ]
     elsif !@resource[:source].nil?
       [
-        Puppet_X::Elastic::plugin_name(@resource[:name]),
+        Puppet_X_old::Elastic::plugin_name(@resource[:name]),
         '--url',
         "file://#{@resource[:source]}"
       ]
