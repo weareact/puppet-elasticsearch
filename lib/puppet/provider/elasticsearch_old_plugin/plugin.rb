@@ -2,7 +2,7 @@ require 'puppet/provider/elastic_plugin_old'
 
 Puppet::Type.type(:elasticsearch_old_plugin).provide(
   :plugin,
-  :parent => Puppet::Provider::ElasticPlugin
+  :parent => Puppet::Provider::ElasticPlugin_old
 ) do
   desc 'Pre-5.x provider for Elasticsearch bin/plugin command operations.'
 
