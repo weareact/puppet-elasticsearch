@@ -1,18 +1,18 @@
 ### MANAGED BY PUPPET ###
 <%-
   $LOAD_PATH.unshift(File.join(File.dirname(__FILE__),"..","..","..","lib"))
-  require 'puppet_x/elastic/deep_to_i'
-  require 'puppet_x/elastic/hash'
+  require 'puppet_x_old/elastic/deep_to_i'
+  require 'puppet_x_old/elastic/hash'
 
   @yml_string = ''
 
   if !@data.empty?
 
     # Sort Hash and transform it into yaml
-    @yml_string += Puppet_X::Elastic::deep_to_i(
+    @yml_string += Puppet_X_old::Elastic::deep_to_i(
       @data
     ).extend(
-      Puppet_X::Elastic::SortedHash
+      Puppet_X_old::Elastic::SortedHash
     ).to_yaml
 
     # Puppet < 4 uses ZAML, which has some deviations from Puppet 4 YAML
